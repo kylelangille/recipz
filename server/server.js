@@ -21,7 +21,7 @@ express()
   .use(express.static("./server/assets"))
   .use(express.json())
   .use(express.urlencoded({ extended: false }))
-  .use("/", express.status(__dirname + "/"))
+  .use("/", express.static(__dirname + "/"))
   // REST ENDPOINTS GO HERE:
   //
   .listen(PORT, () => {

@@ -54,6 +54,7 @@ h6 {
     --paragraph: #94a1b2;
     --button: #7f5af0;
     --button-text: #fffffe;
+    --button-hover: #6648c0;
     
     --stroke: #010101;
     --main: #fffffe;
