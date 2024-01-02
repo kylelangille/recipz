@@ -6,18 +6,18 @@ import Input from "./UI/Input";
 const Form = () => {
   const [formData, setFormData] = useState({
     recipeName: "",
-    measure1: null,
     ingredient1: "",
-    measure2: null,
+    measure1: null,
     ingredient2: "",
-    measure3: null,
+    measure2: null,
     ingredient3: "",
-    measure4: null,
+    measure3: null,
     ingredient4: "",
-    measure5: null,
+    measure4: null,
     ingredient5: "",
-    measure6: null,
+    measure5: null,
     ingredient6: "",
+    measure6: null,
     instructions: "",
   });
 
