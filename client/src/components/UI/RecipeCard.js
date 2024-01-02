@@ -32,7 +32,11 @@ const RecipeCard = ({ meal }) => {
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  width: 20rem;
+`;
 
 const MealImg = styled.img``;
 

@@ -25,6 +25,7 @@ const Head = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.3);
 `;
 
 const Heading = styled.h1`
