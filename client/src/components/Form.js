@@ -1,23 +1,15 @@
 import { styled } from "styled-components";
 import { useState } from "react";
 import Button from "./UI/Button";
+import AddButton from "./UI/AddButton";
+import RemoveButton from "./UI/RemoveButton";
 import Input from "./UI/Input";
 
 const Form = () => {
   const [formData, setFormData] = useState({
     recipeName: "",
-    ingredient1: "",
-    measure1: null,
-    ingredient2: "",
-    measure2: null,
-    ingredient3: "",
-    measure3: null,
-    ingredient4: "",
-    measure4: null,
-    ingredient5: "",
-    measure5: null,
-    ingredient6: "",
-    measure6: null,
+    mealImg: null,
+    ingredients: [],
     instructions: "",
   });
 
@@ -27,6 +19,43 @@ const Form = () => {
       ...prevData,
       [id]: value,
     }));
+  };
+
+  const handleImgChange = (ev) => {
+    const { id, imgFile } = ev.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: imgFile[0],
+    }));
+  };
+
+  const handleIngredientChange = (index, field, value) => {
+    setFormData((prevData) => {
+      const newIngredients = [...prevData.ingredients];
+      newIngredients[index][field] = value;
+      return {
+        ...prevData,
+        ingredients: newIngredients,
+      };
+    });
+  };
+
+  const handleAddIngredient = () => {
+    setFormData((prevData) => ({
+      ...prevData,
+      ingredients: [...prevData.ingredients, { ingredient: "", measure: "" }],
+    }));
+  };
+
+  const handleRemoveIngredient = (index) => {
+    setFormData((prevData) => {
+      const newIngredients = [...prevData.ingredients];
+      newIngredients.splice(index, 1);
+      return {
+        ...prevData,
+        ingredients: newIngredients,
+      };
+    });
   };
 
   const handleSubmit = (ev) => {
@@ -40,117 +69,53 @@ const Form = () => {
         <Input
           label="Recipe name"
           type="text"
-          id="name"
+          id="recipeName"
           value={formData.recipeName}
           onChange={handleInputChange}
         />
 
         <label htmlFor="mealImg">
           Select an image:
-          <input id="mealImg" type="file" name="mealImg" accep="image/*" />
+          <input
+            id="mealImg"
+            type="file"
+            name="mealImg"
+            accep="image/*"
+            onChange={handleImgChange}
+          />
         </label>
 
-        <IngredientWrapper>
-          <Input
-            label="First Ingredient"
-            type="text"
-            id="ingredient1"
-            value={formData.ingredient1}
-            onChange={handleInputChange}
-          />
-          <Input
-            label="How much?"
-            type="text"
-            id="measure1"
-            value={formData.measure1}
-            onChange={handleInputChange}
-          />
-        </IngredientWrapper>
+        {formData.ingredients.map((ingredient, index) => (
+          <IngredientWrapper key={index}>
+            <Input
+              label={`Ingredient ${index + 1}`}
+              type="text"
+              value={ingredient.ingredient}
+              onChange={(ev) =>
+                handleIngredientChange(index, "ingredient", ev.target.value)
+              }
+            />
 
-        <IngredientWrapper>
-          <Input
-            label="Second Ingredient"
-            type="text"
-            id="ingredient2"
-            value={formData.ingredient2}
-            onChange={handleInputChange}
-          />
-          <Input
-            label="How much?"
-            type="text"
-            id="measure2"
-            value={formData.measure2}
-            onChange={handleInputChange}
-          />
-        </IngredientWrapper>
+            <Input
+              label="How much?"
+              type="text"
+              value={ingredient.measure}
+              onChange={(ev) =>
+                handleIngredientChange(index, "measure", ev.target.value)
+              }
+            />
+            <RemoveButton
+              type="button"
+              onClick={() => handleRemoveIngredient(index)}
+            >
+              &times;
+            </RemoveButton>
+          </IngredientWrapper>
+        ))}
 
-        <IngredientWrapper>
-          <Input
-            label="Third Ingredient"
-            type="text"
-            id="ingredient3"
-            value={formData.ingredient3}
-            onChange={handleInputChange}
-          />
-          <Input
-            label="How much?"
-            type="text"
-            id="measure3"
-            value={formData.measure3}
-            onChange={handleInputChange}
-          />
-        </IngredientWrapper>
-
-        <IngredientWrapper>
-          <Input
-            label="Fourth Ingredient"
-            type="text"
-            id="ingredient4"
-            value={formData.ingredient4}
-            onChange={handleInputChange}
-          />
-          <Input
-            label="How much?"
-            type="text"
-            id="measure4"
-            value={formData.measure4}
-            onChange={handleInputChange}
-          />
-        </IngredientWrapper>
-
-        <IngredientWrapper>
-          <Input
-            label="Fifth Ingredient"
-            type="text"
-            id="ingredient5"
-            value={formData.ingredient5}
-            onChange={handleInputChange}
-          />
-          <Input
-            label="How much?"
-            type="text"
-            id="measure5"
-            value={formData.measure5}
-            onChange={handleInputChange}
-          />
-        </IngredientWrapper>
-
-        <IngredientWrapper>
-          <Input
-            label="Sixth Ingredient"
-            type="text"
-            id="ingredient6"
-            value={formData.ingredient6}
-            onChange={handleInputChange}
-          />
-          <Input
-            label="How much?"
-            type="text"
-            id="measure6"
-            value={formData.measure6}
-            onChange={handleInputChange}
-          />
-        </IngredientWrapper>
+        <AddButton type="button" onClick={handleAddIngredient}>
+          Add Ingredient
+        </AddButton>
 
         <InstructionsWrapper>
           <label htmlFor="instructions">Add instructions</label>

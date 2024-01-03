@@ -61,6 +61,7 @@ h6 {
     --highlight: #7f5af0;
     --secondary: #72757e;
     --tertiary: #2cb67d;
+    --remove: #D64045;
 }
 
 body {
