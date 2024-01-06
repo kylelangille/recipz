@@ -1,14 +1,24 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "styled-components";
 import Button from "./UI/Button";
 
 const Header = () => {
+  const { loginWithPopup } = useAuth0();
+
+  const handleLogin = async () => {
+    try {
+      await loginWithPopup();
+    } catch (err) {
+      console.error("Error logging in: ", err);
+    }
+  };
   return (
     <Head>
       <Heading>ReciPZ</Heading>
       <nav>
         <NavList>
           <li>
-            <Button>Log in</Button>
+            <Button onClick={handleLogin}>Log in</Button>
           </li>
         </NavList>
       </nav>
