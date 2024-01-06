@@ -3,14 +3,22 @@ import { styled } from "styled-components";
 import Button from "./UI/Button";
 
 const Header = () => {
-  const { loginWithRedirect } = useAuth0();
+  const { loginWithPopup } = useAuth0();
+
+  const handleLogin = async () => {
+    try {
+      await loginWithPopup();
+    } catch (err) {
+      console.error("Error logging in: ", err);
+    }
+  };
   return (
     <Head>
       <Heading>ReciPZ</Heading>
       <nav>
         <NavList>
           <li>
-            <Button onClick={() => loginWithRedirect()}>Log in</Button>
+            <Button onClick={handleLogin}>Log in</Button>
           </li>
         </NavList>
       </nav>

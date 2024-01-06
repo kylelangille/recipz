@@ -6,7 +6,7 @@ const Landing = () => {
     <Wrapper>
       <HeroImg src={heroImg} />
       <SubWrapper>
-        <h3>ReciPZ</h3>
+        <h1>ReciPZ</h1>
         <p>Your personal collaborative cookbook</p>
       </SubWrapper>
     </Wrapper>
@@ -24,7 +24,7 @@ const SubWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  h3 {
+  h1 {
     color: var(--button);
     font-size: 3rem;
     text-shadow: 1px 1px 1px var(--stroke);
