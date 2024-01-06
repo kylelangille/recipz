@@ -1,14 +1,16 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "styled-components";
 import Button from "./UI/Button";
 
 const Header = () => {
+  const { loginWithRedirect } = useAuth0();
   return (
     <Head>
       <Heading>ReciPZ</Heading>
       <nav>
         <NavList>
           <li>
-            <Button>Log in</Button>
+            <Button onClick={() => loginWithRedirect()}>Log in</Button>
           </li>
         </NavList>
       </nav>
