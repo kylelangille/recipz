@@ -2,6 +2,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import GlobalStyles from "./GlobalStyles";
 import Header from "./Header";
 import Landing from "./Landing";
+import Form from "./Form";
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
@@ -15,7 +16,8 @@ const App = () => {
     >
       <GlobalStyles />
       <Header />
-      <Landing />
+      {/* <Landing /> */}
+      <Form />
     </Auth0Provider>
   );
 };

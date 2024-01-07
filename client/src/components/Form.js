@@ -134,6 +134,9 @@ const Form = () => {
 
 const Wrapper = styled.div`
   margin-top: 7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const IngredientWrapper = styled.div`
