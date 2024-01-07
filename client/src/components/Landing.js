@@ -1,14 +1,24 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "styled-components";
 import heroImg from "../assets/food-img.png";
 
 const Landing = () => {
+  const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
+
+  console.log(user);
   return (
     <Wrapper>
-      <HeroImg src={heroImg} />
-      <SubWrapper>
-        <h1>ReciPZ</h1>
-        <p>Your personal collaborative cookbook</p>
-      </SubWrapper>
+      {isAuthenticated ? (
+        <p>Welcome, {user.name}</p>
+      ) : (
+        <>
+          <HeroImg src={heroImg} />
+          <SubWrapper>
+            <h1>ReciPZ</h1>
+            <p>Your personal collaborative cookbook</p>
+          </SubWrapper>
+        </>
+      )}
     </Wrapper>
   );
 };

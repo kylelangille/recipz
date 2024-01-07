@@ -3,7 +3,8 @@ import { styled } from "styled-components";
 import Button from "./UI/Button";
 
 const Header = () => {
-  const { loginWithPopup } = useAuth0();
+  const { loginWithPopup, isAuthenticated, user, loginWithRedirect, logout } =
+    useAuth0();
 
   const handleLogin = async () => {
     try {
@@ -18,7 +19,11 @@ const Header = () => {
       <nav>
         <NavList>
           <li>
-            <Button onClick={handleLogin}>Log in</Button>
+            {isAuthenticated ? (
+              <Button onClick={() => logout()}>Log out</Button>
+            ) : (
+              <Button onClick={handleLogin}>Log in</Button>
+            )}
           </li>
         </NavList>
       </nav>
