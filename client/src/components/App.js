@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyles from "./GlobalStyles";
 import Header from "./Header";
 import Landing from "./Landing";
-import Form from "./Form";
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
@@ -18,8 +17,7 @@ const App = () => {
       <BrowserRouter>
         <GlobalStyles />
         <Header />
-        {/* <Landing /> */}
-        <Form />
+        <Landing />
         <Routes></Routes>
       </BrowserRouter>
     </Auth0Provider>
