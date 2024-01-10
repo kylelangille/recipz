@@ -10,7 +10,7 @@ const Form = () => {
     recipeName: "",
     mealImg: null,
     ingredients: [],
-    instructions: "",
+    steps: [],
   });
 
   const handleInputChange = (ev) => {
@@ -58,6 +58,37 @@ const Form = () => {
     });
   };
 
+  //
+  const handleStepChange = (index, value) => {
+    setFormData((prevData) => {
+      const newSteps = [...prevData.steps];
+      newSteps[index] = value;
+      return {
+        ...prevData,
+        steps: newSteps,
+      };
+    });
+  };
+
+  const handleAddStep = () => {
+    setFormData((prevData) => ({
+      ...prevData,
+      steps: [...prevData.steps, ""],
+    }));
+  };
+
+  const handleRemoveStep = (index) => {
+    setFormData((prevData) => {
+      const newSteps = [...prevData.steps];
+      newSteps.splice(index, 1);
+      return {
+        ...prevData,
+        steps: newSteps,
+      };
+    });
+  };
+  //
+
   const handleSubmit = (ev) => {
     ev.preventDefault();
   };
@@ -86,7 +117,7 @@ const Form = () => {
         </label>
 
         {formData.ingredients.map((ingredient, index) => (
-          <IngredientWrapper key={index}>
+          <InputWrapper key={index}>
             <Input
               label={`Ingredient ${index + 1}`}
               type="text"
@@ -110,21 +141,30 @@ const Form = () => {
             >
               &times;
             </RemoveButton>
-          </IngredientWrapper>
+          </InputWrapper>
         ))}
 
         <AddButton type="button" onClick={handleAddIngredient}>
           Add Ingredient
         </AddButton>
 
-        <InstructionsWrapper>
-          <label htmlFor="instructions">Add instructions</label>
-          <textarea
-            id="instructions"
-            name="instructions"
-            placeholder="How do you make this?"
-          ></textarea>
-        </InstructionsWrapper>
+        {formData.steps.map((step, index) => (
+          <InputWrapper key={index}>
+            <Input
+              label={`Step ${index + 1}`}
+              type="text"
+              value={step}
+              onChange={(ev) => handleStepChange(index, ev.target.value)}
+            />
+            <RemoveButton type="button" onClick={() => handleRemoveStep(index)}>
+              &times;
+            </RemoveButton>
+          </InputWrapper>
+        ))}
+
+        <AddButton type="button" onClick={handleAddStep}>
+          Add Step
+        </AddButton>
 
         <Button type="submit">Add Recipe</Button>
       </form>
@@ -139,25 +179,14 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const IngredientWrapper = styled.div`
+const InputWrapper = styled.div`
   display: flex;
+  align-items: center;
   gap: 10px;
-`;
-
-const InstructionsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
 
   label {
     font-weight: bold;
     margin-bottom: 0.5rem;
-  }
-
-  textarea {
-    width: 23rem;
-    height: 10rem;
-    border: 1px solid var(--stroke);
-    resize: none;
   }
 `;
 
