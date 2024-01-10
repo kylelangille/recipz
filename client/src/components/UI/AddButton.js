@@ -14,6 +14,7 @@ const Wrapper = styled.div`
   width: 12rem;
   border-radius: 12px;
   transition: 0.3s all ease-in-out;
+  margin: 1rem 0;
 
   &:hover {
     background: #999;
