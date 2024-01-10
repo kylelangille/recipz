@@ -3,12 +3,11 @@ import { styled } from "styled-components";
 import Button from "./UI/Button";
 
 const Header = () => {
-  const { loginWithPopup, isAuthenticated, user, loginWithRedirect, logout } =
-    useAuth0();
+  const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
 
   const handleLogin = async () => {
     try {
-      await loginWithPopup();
+      await loginWithRedirect();
     } catch (err) {
       console.error("Error logging in: ", err);
     }
