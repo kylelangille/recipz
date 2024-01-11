@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "styled-components";
 import { useState } from "react";
 import Button from "./UI/Button";
@@ -6,6 +7,7 @@ import RemoveButton from "./UI/RemoveButton";
 import Input from "./UI/Input";
 
 const Form = () => {
+  const { getAccessTokenSilently } = useAuth0;
   const [formData, setFormData] = useState({
     recipeName: "",
     mealImg: null,
@@ -22,10 +24,10 @@ const Form = () => {
   };
 
   const handleImgChange = (ev) => {
-    const { id, imgFile } = ev.target;
+    const { id, files } = ev.target;
     setFormData((prevData) => ({
       ...prevData,
-      [id]: imgFile[0],
+      [id]: files[0],
     }));
   };
 
@@ -89,8 +91,29 @@ const Form = () => {
   };
   //
 
-  const handleSubmit = (ev) => {
+  const handleSubmit = async (ev) => {
     ev.preventDefault();
+
+    const newRecipe = { formData };
+
+    try {
+      const accessToken = await getAccessTokenSilently();
+
+      const response = await fetch("/add-recipe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(newRecipe),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add recipe");
+      }
+    } catch (err) {
+      console.error("Error: ", err);
+    }
   };
 
   return (
@@ -111,7 +134,7 @@ const Form = () => {
             id="mealImg"
             type="file"
             name="mealImg"
-            accep="image/*"
+            accept="image/*"
             onChange={handleImgChange}
           />
         </label>
