@@ -44,6 +44,7 @@ const Dashboard = () => {
 const ButtonControl = styled.div`
   display: flex;
   justify-content: space-between;
+  width: 40rem;
 `;
 
 const NavLink = styled(Link)`
