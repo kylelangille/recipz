@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 const RecipeCard = ({ meal }) => {
   return (
     <Wrapper>
-      <h2>{meal.strMeal}</h2>
+      <Title>{meal.strMeal}</Title>
       <MealImg src={meal.strMealThumb} alt={meal.strMeal} />
       <p>Ingredients:</p>
       <ol>
@@ -36,8 +36,20 @@ const Wrapper = styled.div`
   border: 1px solid var(--stroke);
   border-radius: 12px;
   width: 20rem;
+  margin-top: 1rem;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.3);
 `;
 
-const MealImg = styled.img``;
+const Title = styled.h2`
+  text-align: center;
+`;
+
+const MealImg = styled.img`
+  max-width: 15rem;
+  max-height: 15rem;
+  margin: 0 auto 1rem auto;
+  border-radius: 12px;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.3);
+`;
 
 export default RecipeCard;

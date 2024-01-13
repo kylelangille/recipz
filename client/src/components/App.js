@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyles from "./GlobalStyles";
 import Header from "./Header";
 import Landing from "./Landing";
+import Form from "./Form";
+import Random from "./Random";
+import Feed from "./Feed";
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
@@ -20,7 +23,11 @@ const App = () => {
         <GlobalStyles />
         <Header />
         <Landing />
-        <Routes></Routes>
+        <Routes>
+          <Route path="/add-recipe" element={<Form />} />
+          <Route path="/random" element={<Random />} />
+          <Route path="/feed" element={<Feed />} />
+        </Routes>
       </BrowserRouter>
     </Auth0Provider>
   );
