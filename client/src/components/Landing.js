@@ -1,15 +1,18 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "styled-components";
 import heroImg from "../assets/food-img.png";
+import Form from "./Form";
 
 const Landing = () => {
-  const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
 
-  console.log(user);
   return (
     <Wrapper>
       {isAuthenticated ? (
-        <p>Welcome, {user.name}</p>
+        <>
+          <p>Welcome, {user.name}</p>
+          <Form />
+        </>
       ) : (
         <>
           <HeroImg src={heroImg} />

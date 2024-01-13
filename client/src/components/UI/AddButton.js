@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 const AddButton = ({ onClick, children, ...props }) => {
   return (
     <Wrapper onClick={onClick}>
-      <Button>+</Button>
+      <Button type="button">+</Button>
       <span>{children}</span>
     </Wrapper>
   );

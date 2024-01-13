@@ -6,6 +6,7 @@ import Landing from "./Landing";
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+const audience = process.env.REACT_APP_AUTH0_API_AUDIENCE;
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
       domain={domain}
       clientId={clientId}
       redirectUri={window.location.origin}
+      audience={audience}
     >
       <BrowserRouter>
         <GlobalStyles />
