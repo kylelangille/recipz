@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "styled-components";
 import heroImg from "../assets/food-img.png";
-import Form from "./Form";
+import Dashboard from "./Dashboard";
 
 const Landing = () => {
   const { isAuthenticated, user } = useAuth0();
@@ -9,10 +9,10 @@ const Landing = () => {
   return (
     <Wrapper>
       {isAuthenticated ? (
-        <>
-          <p>Welcome, {user.name}</p>
-          <Form />
-        </>
+        <Control>
+          <p>Welcome, {user.given_name}!</p>
+          <Dashboard />
+        </Control>
       ) : (
         <>
           <HeroImg src={heroImg} />
@@ -31,6 +31,10 @@ const Wrapper = styled.div`
   margin: 10rem auto 0 auto;
   max-width: 50rem;
   display: flex;
+
+  p {
+    font-size: 1.2rem;
+  }
 `;
 
 const SubWrapper = styled.div`
@@ -54,6 +58,13 @@ const HeroImg = styled.img`
   border-radius: 6px;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.3);
   margin-right: 2.6rem;
+`;
+
+const Control = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 30rem;
 `;
 
 export default Landing;

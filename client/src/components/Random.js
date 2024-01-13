@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 import RecipeCard from "./UI/RecipeCard";
+import Button from "./UI/Button";
 
 const Random = () => {
   const [mealList, setMealList] = useState([]);
@@ -13,13 +14,20 @@ const Random = () => {
   };
 
   return (
-    <div style={{ marginTop: "10rem" }}>
-      <button onClick={getMeal}>button</button>
+    <Wrapper>
+      <Button onClick={getMeal}>Generate Recipe</Button>
       {mealList.map((meal) => (
         <RecipeCard key={meal.idMeal} meal={meal} />
       ))}
-    </div>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  margin: 7rem auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export default Random;
