@@ -6,6 +6,7 @@ import Landing from "./Landing";
 import Form from "./Form";
 import Random from "./Random";
 import Feed from "./Feed";
+import MyRecipes from "./MyRecipes";
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/add-recipe" element={<Form />} />
           <Route path="/random" element={<Random />} />
           <Route path="/feed" element={<Feed />} />
+          <Route path="/my-recipes" element={<MyRecipes />} />
         </Routes>
       </BrowserRouter>
     </Auth0Provider>

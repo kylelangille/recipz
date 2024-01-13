@@ -15,11 +15,22 @@ const Dashboard = () => {
             Add New Recipe
           </NavLink>
         </Button>
+
         <Button>
           <NavLink to="/feed" active={currentLocation.pathname === "/feed"}>
             My Feed
           </NavLink>
         </Button>
+
+        <Button>
+          <NavLink
+            to="/my-recipes"
+            active={currentLocation.pathname === "/my-recipes"}
+          >
+            My Recipes
+          </NavLink>
+        </Button>
+
         <Button>
           <NavLink to="/random" active={currentLocation.pathname === "/random"}>
             Get Random Recipe
