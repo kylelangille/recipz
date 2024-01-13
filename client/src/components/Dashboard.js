@@ -50,6 +50,7 @@ const ButtonControl = styled.div`
 const NavLink = styled(Link)`
   color: ${(props) => (props.active ? "var(--heading)" : "var(--stroke)")};
   text-decoration: ${(props) => (props.active ? "underline" : "none")};
+  text-underline-offset: ${(props) => (props.active ? "4px" : "auto")};
   font-weight: bold;
 `;
 
