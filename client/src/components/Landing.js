@@ -4,9 +4,8 @@ import heroImg from "../assets/food-img.png";
 import Form from "./Form";
 
 const Landing = () => {
-  const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
 
-  console.log(user);
   return (
     <Wrapper>
       {isAuthenticated ? (

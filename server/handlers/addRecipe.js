@@ -2,6 +2,7 @@
 
 const { MongoClient } = require("mongodb");
 require("dotenv").config();
+const { v4: uuidv4 } = require("uuid");
 const MONGO_URI = process.env.MONGO_URI;
 
 const addRecipe = async (req, res) => {
@@ -10,12 +11,13 @@ const addRecipe = async (req, res) => {
   try {
     await client.connect();
 
-    const userId = req.user.sub;
     const formData = req.body;
 
+    const recipeId = uuidv4();
+
     const recipeData = {
+      _id: recipeId,
       ...formData,
-      createdBy: userId,
     };
 
     const db = client.db("recipz");

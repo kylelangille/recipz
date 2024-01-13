@@ -7,7 +7,7 @@ import RemoveButton from "./UI/RemoveButton";
 import Input from "./UI/Input";
 
 const Form = () => {
-  const { getAccessTokenSilently } = useAuth0;
+  const { user } = useAuth0();
   const [formData, setFormData] = useState({
     recipeName: "",
     mealImg: null,
@@ -60,7 +60,6 @@ const Form = () => {
     });
   };
 
-  //
   const handleStepChange = (index, value) => {
     setFormData((prevData) => {
       const newSteps = [...prevData.steps];
@@ -89,21 +88,19 @@ const Form = () => {
       };
     });
   };
-  //
 
   const handleSubmit = async (ev) => {
     ev.preventDefault();
 
-    const newRecipe = { formData };
+    const userId = user.sub.replace("google-oauth2|", "");
+
+    const newRecipe = { formData, userId };
 
     try {
-      const accessToken = await getAccessTokenSilently();
-
       const response = await fetch("/add-recipe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(newRecipe),
       });
