@@ -1,19 +1,29 @@
 import { styled } from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Button from "./UI/Button";
 
 const Dashboard = () => {
+  const currentLocation = useLocation();
   return (
     <div>
       <ButtonControl>
         <Button>
-          <NavLink to="/add-recipe">Add New Recipe</NavLink>
+          <NavLink
+            to="/add-recipe"
+            active={currentLocation.pathname === "/add-recipe"}
+          >
+            Add New Recipe
+          </NavLink>
         </Button>
         <Button>
-          <NavLink to="/feed">My Feed</NavLink>
+          <NavLink to="/feed" active={currentLocation.pathname === "/feed"}>
+            My Feed
+          </NavLink>
         </Button>
         <Button>
-          <NavLink to="/random">Get Random Recipe</NavLink>
+          <NavLink to="/random" active={currentLocation.pathname === "/random"}>
+            Get Random Recipe
+          </NavLink>
         </Button>
       </ButtonControl>
     </div>
@@ -26,8 +36,8 @@ const ButtonControl = styled.div`
 `;
 
 const NavLink = styled(Link)`
-  color: var(--stroke);
-  text-decoration: none;
+  color: ${(props) => (props.active ? "var(--heading)" : "var(--stroke)")};
+  text-decoration: ${(props) => (props.active ? "underline" : "none")};
   font-weight: bold;
 `;
 

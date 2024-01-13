@@ -1,9 +1,10 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "styled-components";
+import { Link } from "react-router-dom";
 import Button from "./UI/Button";
 
 const Header = () => {
-  const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
   const handleLogin = async () => {
     try {
@@ -14,7 +15,9 @@ const Header = () => {
   };
   return (
     <Head>
-      <Heading>ReciPZ</Heading>
+      <NavLink to="/">
+        <Heading>ReciPZ</Heading>
+      </NavLink>
       <nav>
         <NavList>
           <li>
@@ -54,6 +57,10 @@ const NavList = styled.ul`
   margin-right: 4rem;
   color: var(--heading);
   text-shadow: 1px 2px 2px var(--stroke);
+`;
+
+const NavLink = styled(Link)`
+  text-decoration: none;
 `;
 
 export default Header;
