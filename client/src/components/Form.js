@@ -5,6 +5,7 @@ import Button from "./UI/Button";
 import AddButton from "./UI/AddButton";
 import RemoveButton from "./UI/RemoveButton";
 import Input from "./UI/Input";
+import LoadingCircle from "./UI/LoadingCircle";
 
 const Form = () => {
   const { user } = useAuth0();
@@ -14,6 +15,8 @@ const Form = () => {
     ingredients: [],
     steps: [],
   });
+  const [loading, setLoading] = useState(false);
+  const [recipeSubmitted, setRecipeSubmitted] = useState(false);
 
   const handleInputChange = (ev) => {
     const { id, value } = ev.target;
@@ -97,6 +100,7 @@ const Form = () => {
     const newRecipe = { formData, userId };
 
     try {
+      setLoading(true);
       const response = await fetch("/add-recipe", {
         method: "POST",
         headers: {
@@ -108,8 +112,12 @@ const Form = () => {
       if (!response.ok) {
         throw new Error("Failed to add recipe");
       }
+
+      setRecipeSubmitted(true);
     } catch (err) {
       console.error("Error: ", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -117,76 +125,92 @@ const Form = () => {
     <Wrapper>
       <form onSubmit={handleSubmit}>
         <h2>Add a new recipe:</h2>
-        <Input
-          label="Recipe name"
-          type="text"
-          id="recipeName"
-          value={formData.recipeName}
-          onChange={handleInputChange}
-        />
-
-        <label htmlFor="mealImg">
-          Select an image:
-          <input
-            id="mealImg"
-            type="file"
-            name="mealImg"
-            accept="image/*"
-            onChange={handleImgChange}
-          />
-        </label>
-
-        {formData.ingredients.map((ingredient, index) => (
-          <InputWrapper key={index}>
+        {loading ? (
+          <>
+            <LoadingCircle />
+            <p>Submitting recipe...</p>
+          </>
+        ) : recipeSubmitted ? (
+          <>
+            <p>Your recipe has been added!</p>
+          </>
+        ) : (
+          <>
             <Input
-              label={`Ingredient ${index + 1}`}
+              label="Recipe name"
               type="text"
-              value={ingredient.ingredient}
-              onChange={(ev) =>
-                handleIngredientChange(index, "ingredient", ev.target.value)
-              }
+              id="recipeName"
+              value={formData.recipeName}
+              onChange={handleInputChange}
             />
 
-            <Input
-              label="How much?"
-              type="text"
-              value={ingredient.measure}
-              onChange={(ev) =>
-                handleIngredientChange(index, "measure", ev.target.value)
-              }
-            />
-            <RemoveButton
-              type="button"
-              onClick={() => handleRemoveIngredient(index)}
-            >
-              &times;
-            </RemoveButton>
-          </InputWrapper>
-        ))}
+            <label htmlFor="mealImg">
+              Select an image:
+              <input
+                id="mealImg"
+                type="file"
+                name="mealImg"
+                accept="image/*"
+                onChange={handleImgChange}
+              />
+            </label>
 
-        <AddButton type="button" onClick={handleAddIngredient}>
-          Add Ingredient
-        </AddButton>
+            {formData.ingredients.map((ingredient, index) => (
+              <InputWrapper key={index}>
+                <Input
+                  label={`Ingredient ${index + 1}`}
+                  type="text"
+                  value={ingredient.ingredient}
+                  onChange={(ev) =>
+                    handleIngredientChange(index, "ingredient", ev.target.value)
+                  }
+                />
 
-        {formData.steps.map((step, index) => (
-          <InputWrapper key={index}>
-            <Input
-              label={`Step ${index + 1}`}
-              type="text"
-              value={step}
-              onChange={(ev) => handleStepChange(index, ev.target.value)}
-            />
-            <RemoveButton type="button" onClick={() => handleRemoveStep(index)}>
-              &times;
-            </RemoveButton>
-          </InputWrapper>
-        ))}
+                <Input
+                  label="How much?"
+                  type="text"
+                  value={ingredient.measure}
+                  onChange={(ev) =>
+                    handleIngredientChange(index, "measure", ev.target.value)
+                  }
+                />
+                <RemoveButton
+                  type="button"
+                  onClick={() => handleRemoveIngredient(index)}
+                >
+                  &times;
+                </RemoveButton>
+              </InputWrapper>
+            ))}
 
-        <AddButton type="button" onClick={handleAddStep}>
-          Add Step
-        </AddButton>
+            <AddButton type="button" onClick={handleAddIngredient}>
+              Add Ingredient
+            </AddButton>
 
-        <Button type="submit">Add Recipe</Button>
+            {formData.steps.map((step, index) => (
+              <InputWrapper key={index}>
+                <Input
+                  label={`Step ${index + 1}`}
+                  type="text"
+                  value={step}
+                  onChange={(ev) => handleStepChange(index, ev.target.value)}
+                />
+                <RemoveButton
+                  type="button"
+                  onClick={() => handleRemoveStep(index)}
+                >
+                  &times;
+                </RemoveButton>
+              </InputWrapper>
+            ))}
+
+            <AddButton type="button" onClick={handleAddStep}>
+              Add Step
+            </AddButton>
+
+            <Button type="submit">Add Recipe</Button>
+          </>
+        )}
       </form>
     </Wrapper>
   );
