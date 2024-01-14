@@ -7,6 +7,15 @@ import RemoveButton from "./UI/RemoveButton";
 import Input from "./UI/Input";
 import LoadingCircle from "./UI/LoadingCircle";
 
+import { handleInputChangeHelper } from "../form-helpers/handleInputChangeHelper";
+import { handleImgChangeHelper } from "../form-helpers/handleImgChangeHelper";
+import { handleIngredientChangeHelper } from "../form-helpers/handleIngredientChangeHelper";
+import { handleAddIngredientHelper } from "../form-helpers/handleAddIngredientHelper";
+import { handleRemoveIngredientHelper } from "../form-helpers/handleRemoveIngredientHelper";
+import { handleStepChangeHelper } from "../form-helpers/handleStepChangeHelper";
+import { handleAddStepHelper } from "../form-helpers/handleAddStepHelper";
+import { handleRemoveStepHelper } from "../form-helpers/handleRemoveStepHelper";
+
 const Form = () => {
   const { user } = useAuth0();
   const [formData, setFormData] = useState({
@@ -19,77 +28,35 @@ const Form = () => {
   const [recipeSubmitted, setRecipeSubmitted] = useState(false);
 
   const handleInputChange = (ev) => {
-    const { id, value } = ev.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: value,
-    }));
+    handleInputChangeHelper(ev, setFormData);
   };
 
   const handleImgChange = (ev) => {
-    const { id, files } = ev.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: files[0],
-    }));
+    handleImgChangeHelper(ev, setFormData);
   };
 
   const handleIngredientChange = (index, field, value) => {
-    setFormData((prevData) => {
-      const newIngredients = [...prevData.ingredients];
-      newIngredients[index][field] = value;
-      return {
-        ...prevData,
-        ingredients: newIngredients,
-      };
-    });
+    handleIngredientChangeHelper(index, field, value, setFormData);
   };
 
   const handleAddIngredient = () => {
-    setFormData((prevData) => ({
-      ...prevData,
-      ingredients: [...prevData.ingredients, { ingredient: "", measure: "" }],
-    }));
+    handleAddIngredientHelper(setFormData);
   };
 
   const handleRemoveIngredient = (index) => {
-    setFormData((prevData) => {
-      const newIngredients = [...prevData.ingredients];
-      newIngredients.splice(index, 1);
-      return {
-        ...prevData,
-        ingredients: newIngredients,
-      };
-    });
+    handleRemoveIngredientHelper(index, setFormData);
   };
 
   const handleStepChange = (index, value) => {
-    setFormData((prevData) => {
-      const newSteps = [...prevData.steps];
-      newSteps[index] = value;
-      return {
-        ...prevData,
-        steps: newSteps,
-      };
-    });
+    handleStepChangeHelper(index, value, setFormData);
   };
 
   const handleAddStep = () => {
-    setFormData((prevData) => ({
-      ...prevData,
-      steps: [...prevData.steps, ""],
-    }));
+    handleAddStepHelper(setFormData);
   };
 
   const handleRemoveStep = (index) => {
-    setFormData((prevData) => {
-      const newSteps = [...prevData.steps];
-      newSteps.splice(index, 1);
-      return {
-        ...prevData,
-        steps: newSteps,
-      };
-    });
+    handleRemoveStepHelper(index, setFormData);
   };
 
   const handleSubmit = async (ev) => {
