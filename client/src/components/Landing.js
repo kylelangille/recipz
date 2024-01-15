@@ -14,13 +14,13 @@ const Landing = () => {
           <Dashboard />
         </Control>
       ) : (
-        <>
+        <Content>
           <HeroImg src={heroImg} />
           <SubWrapper>
             <h1>ReciPZ</h1>
             <p>Your personal collaborative cookbook</p>
           </SubWrapper>
-        </>
+        </Content>
       )}
     </Wrapper>
   );
@@ -58,6 +58,11 @@ const HeroImg = styled.img`
   border-radius: 6px;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.3);
   margin-right: 2.6rem;
+
+  @media (max-width: 700px) {
+    max-width: 20rem;
+    max-height: 20rem;
+  }
 `;
 
 const Control = styled.div`
@@ -65,6 +70,15 @@ const Control = styled.div`
   flex-direction: column;
   margin: 0 auto;
   width: 30rem;
+`;
+
+const Content = styled.div`
+  display: flex;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+    margin: 0 auto;
+  }
 `;
 
 export default Landing;
