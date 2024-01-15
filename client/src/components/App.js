@@ -1,5 +1,6 @@
 import { Auth0Provider } from "@auth0/auth0-react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import UserProvider from "../context/UserContext";
 import GlobalStyles from "./GlobalStyles";
 import Header from "./Header";
 import Landing from "./Landing";
@@ -20,17 +21,19 @@ const App = () => {
       redirectUri={window.location.origin}
       audience={audience}
     >
-      <BrowserRouter>
-        <GlobalStyles />
-        <Header />
-        <Landing />
-        <Routes>
-          <Route path="/add-recipe" element={<Form />} />
-          <Route path="/random" element={<Random />} />
-          <Route path="/feed" element={<Feed />} />
-          <Route path="/my-recipes" element={<MyRecipes />} />
-        </Routes>
-      </BrowserRouter>
+      <UserProvider>
+        <BrowserRouter>
+          <GlobalStyles />
+          <Header />
+          <Landing />
+          <Routes>
+            <Route path="/add-recipe" element={<Form />} />
+            <Route path="/random" element={<Random />} />
+            <Route path="/feed" element={<Feed />} />
+            <Route path="/my-recipes" element={<MyRecipes />} />
+          </Routes>
+        </BrowserRouter>
+      </UserProvider>
     </Auth0Provider>
   );
 };

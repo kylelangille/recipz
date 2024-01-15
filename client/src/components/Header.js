@@ -1,10 +1,19 @@
 import { useAuth0 } from "@auth0/auth0-react";
+import { useContext, useEffect } from "react";
+import { UserContext } from "../context/UserContext";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import Button from "./UI/Button";
 
 const Header = () => {
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const {
+    isAuthenticated,
+    loginWithRedirect,
+    logout,
+    user: UserFromAuth0,
+  } = useAuth0();
+
+  const { user, createUserAndReceiveData } = useContext(UserContext);
 
   const handleLogin = async () => {
     try {
@@ -13,6 +22,13 @@ const Header = () => {
       console.error("Error logging in: ", err);
     }
   };
+
+  useEffect(() => {
+    if (UserFromAuth0) {
+      createUserAndReceiveData(UserFromAuth0);
+    }
+  }, [UserFromAuth0]);
+
   return (
     <Head>
       <NavLink to="/">

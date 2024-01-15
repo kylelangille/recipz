@@ -62,13 +62,13 @@ const Form = () => {
   const handleSubmit = async (ev) => {
     ev.preventDefault();
 
-    const userId = user.sub.replace("google-oauth2|", "");
+    const userId = user.sub;
 
     const newRecipe = { formData, userId };
 
     try {
       setLoading(true);
-      const response = await fetch("/add-recipe", {
+      const response = await fetch("/api/add-recipe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
