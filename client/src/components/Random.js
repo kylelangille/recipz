@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "styled-components";
 import RecipeCard from "./UI/RecipeCard";
 import Button from "./UI/Button";
 
 const Random = () => {
+  const { isAuthenticated } = useAuth0();
   const [mealList, setMealList] = useState([]);
 
   const getMeal = () => {
@@ -15,10 +17,16 @@ const Random = () => {
 
   return (
     <Wrapper>
-      <Button onClick={getMeal}>Generate Recipe</Button>
-      {mealList.map((meal) => (
-        <RecipeCard key={meal.idMeal} meal={meal} />
-      ))}
+      {isAuthenticated ? (
+        <>
+          <Button onClick={getMeal}>Generate Recipe</Button>
+          {mealList.map((meal) => (
+            <RecipeCard key={meal.idMeal} meal={meal} />
+          ))}
+        </>
+      ) : (
+        <p>You must be logged in to see this content</p>
+      )}
     </Wrapper>
   );
 };
