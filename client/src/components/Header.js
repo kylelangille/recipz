@@ -13,7 +13,7 @@ const Header = () => {
     user: UserFromAuth0,
   } = useAuth0();
 
-  const { user, createUserAndReceiveData } = useContext(UserContext);
+  const { createUserAndReceiveData } = useContext(UserContext);
 
   const handleLogin = async () => {
     try {

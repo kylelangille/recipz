@@ -17,7 +17,7 @@ import { handleAddStepHelper } from "../form-helpers/handleAddStepHelper";
 import { handleRemoveStepHelper } from "../form-helpers/handleRemoveStepHelper";
 
 const Form = () => {
-  const { user } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
   const [formData, setFormData] = useState({
     recipeName: "",
     mealImg: null,
@@ -90,95 +90,103 @@ const Form = () => {
 
   return (
     <Wrapper>
-      <form onSubmit={handleSubmit}>
-        <h2>Add a new recipe:</h2>
-        {loading ? (
-          <>
-            <LoadingCircle />
-            <p>Submitting recipe...</p>
-          </>
-        ) : recipeSubmitted ? (
-          <>
-            <p>Your recipe has been added!</p>
-          </>
-        ) : (
-          <>
-            <Input
-              label="Recipe name"
-              type="text"
-              id="recipeName"
-              value={formData.recipeName}
-              onChange={handleInputChange}
-            />
-
-            <label htmlFor="mealImg">
-              Select an image:
-              <input
-                id="mealImg"
-                type="file"
-                name="mealImg"
-                accept="image/*"
-                onChange={handleImgChange}
+      {isAuthenticated ? (
+        <form onSubmit={handleSubmit}>
+          <h2>Add a new recipe:</h2>
+          {loading ? (
+            <>
+              <LoadingCircle />
+              <p>Submitting recipe...</p>
+            </>
+          ) : recipeSubmitted ? (
+            <>
+              <p>Your recipe has been added!</p>
+            </>
+          ) : (
+            <>
+              <Input
+                label="Recipe name"
+                type="text"
+                id="recipeName"
+                value={formData.recipeName}
+                onChange={handleInputChange}
               />
-            </label>
 
-            {formData.ingredients.map((ingredient, index) => (
-              <InputWrapper key={index}>
-                <Input
-                  label={`Ingredient ${index + 1}`}
-                  type="text"
-                  value={ingredient.ingredient}
-                  onChange={(ev) =>
-                    handleIngredientChange(index, "ingredient", ev.target.value)
-                  }
+              <label htmlFor="mealImg">
+                Select an image:
+                <input
+                  id="mealImg"
+                  type="file"
+                  name="mealImg"
+                  accept="image/*"
+                  onChange={handleImgChange}
                 />
+              </label>
 
-                <Input
-                  label="How much?"
-                  type="text"
-                  value={ingredient.measure}
-                  onChange={(ev) =>
-                    handleIngredientChange(index, "measure", ev.target.value)
-                  }
-                />
-                <RemoveButton
-                  type="button"
-                  onClick={() => handleRemoveIngredient(index)}
-                >
-                  &times;
-                </RemoveButton>
-              </InputWrapper>
-            ))}
+              {formData.ingredients.map((ingredient, index) => (
+                <InputWrapper key={index}>
+                  <Input
+                    label={`Ingredient ${index + 1}`}
+                    type="text"
+                    value={ingredient.ingredient}
+                    onChange={(ev) =>
+                      handleIngredientChange(
+                        index,
+                        "ingredient",
+                        ev.target.value
+                      )
+                    }
+                  />
 
-            <AddButton type="button" onClick={handleAddIngredient}>
-              Add Ingredient
-            </AddButton>
+                  <Input
+                    label="How much?"
+                    type="text"
+                    value={ingredient.measure}
+                    onChange={(ev) =>
+                      handleIngredientChange(index, "measure", ev.target.value)
+                    }
+                  />
+                  <RemoveButton
+                    type="button"
+                    onClick={() => handleRemoveIngredient(index)}
+                  >
+                    &times;
+                  </RemoveButton>
+                </InputWrapper>
+              ))}
 
-            {formData.steps.map((step, index) => (
-              <InputWrapper key={index}>
-                <Input
-                  label={`Step ${index + 1}`}
-                  type="text"
-                  value={step}
-                  onChange={(ev) => handleStepChange(index, ev.target.value)}
-                />
-                <RemoveButton
-                  type="button"
-                  onClick={() => handleRemoveStep(index)}
-                >
-                  &times;
-                </RemoveButton>
-              </InputWrapper>
-            ))}
+              <AddButton type="button" onClick={handleAddIngredient}>
+                Add Ingredient
+              </AddButton>
 
-            <AddButton type="button" onClick={handleAddStep}>
-              Add Step
-            </AddButton>
+              {formData.steps.map((step, index) => (
+                <InputWrapper key={index}>
+                  <Input
+                    label={`Step ${index + 1}`}
+                    type="text"
+                    value={step}
+                    onChange={(ev) => handleStepChange(index, ev.target.value)}
+                  />
+                  <RemoveButton
+                    type="button"
+                    onClick={() => handleRemoveStep(index)}
+                  >
+                    &times;
+                  </RemoveButton>
+                </InputWrapper>
+              ))}
 
-            <Button type="submit">Add Recipe</Button>
-          </>
-        )}
-      </form>
+              <AddButton type="button" onClick={handleAddStep}>
+                Add Step
+              </AddButton>
+
+              <Button type="submit">Add Recipe</Button>
+            </>
+          )}
+        </form>
+      ) : (
+        <p>You must be logged in to see this content.</p>
+      )}
     </Wrapper>
   );
 };
