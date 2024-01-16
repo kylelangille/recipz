@@ -1,17 +1,26 @@
 import { useAuth0 } from "@auth0/auth0-react";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 import { styled } from "styled-components";
 import heroImg from "../assets/food-img.png";
 import Dashboard from "./Dashboard";
 
 const Landing = () => {
-  const { isAuthenticated, user } = useAuth0();
+  const { isAuthenticated } = useAuth0();
+  const { user: userFromContext } = useContext(UserContext);
 
   return (
     <Wrapper>
       {isAuthenticated ? (
         <Control>
-          <p>Welcome, {user.given_name}!</p>
-          <Dashboard />
+          {userFromContext && userFromContext.name ? (
+            <>
+              <p>Welcome, {userFromContext.name}!</p>
+              <Dashboard />
+            </>
+          ) : (
+            <p>Loading user data...</p>
+          )}
         </Control>
       ) : (
         <Content>
