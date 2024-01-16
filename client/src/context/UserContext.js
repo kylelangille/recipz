@@ -1,11 +1,19 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useCallback } from "react";
 
 export const UserContext = createContext();
 
-const initalState = {};
+const initialState = {};
 
 const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(initalState);
+  const [user, setUser] = useState(initialState);
+
+  const updateUserContext = useCallback((userData) => {
+    setUser({
+      email: userData.email,
+      name: userData.name,
+      picture: userData.picture,
+    });
+  }, []);
 
   const createUserAndReceiveData = async (newUser) => {
     try {
@@ -26,18 +34,16 @@ const UserProvider = ({ children }) => {
 
       const userData = await response.json();
 
-      setUser({
-        email: userData.email,
-        name: userData.name,
-        picture: userData.picture,
-      });
+      updateUserContext(userData.data);
     } catch (err) {
       console.error("Error: ", err);
     }
   };
 
   return (
-    <UserContext.Provider value={{ user, createUserAndReceiveData }}>
+    <UserContext.Provider
+      value={{ user, createUserAndReceiveData, updateUserContext }}
+    >
       {children}
     </UserContext.Provider>
   );
