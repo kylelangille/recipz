@@ -30,7 +30,6 @@ const Button = styled.button`
   height: 40px;
   border: 1px solid #555;
   cursor: pointer;
-
   margin-right: 1rem;
 `;
 

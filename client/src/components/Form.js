@@ -5,6 +5,7 @@ import Button from "./UI/Button";
 import AddButton from "./UI/AddButton";
 import RemoveButton from "./UI/RemoveButton";
 import Input from "./UI/Input";
+import TagInput from "./UI/TagInput";
 import LoadingCircle from "./UI/LoadingCircle";
 
 import { handleInputChangeHelper } from "../form-helpers/handleInputChangeHelper";
@@ -15,6 +16,7 @@ import { handleRemoveIngredientHelper } from "../form-helpers/handleRemoveIngred
 import { handleStepChangeHelper } from "../form-helpers/handleStepChangeHelper";
 import { handleAddStepHelper } from "../form-helpers/handleAddStepHelper";
 import { handleRemoveStepHelper } from "../form-helpers/handleRemoveStepHelper";
+import { handleTagChangeHelper } from "../form-helpers/handleTagChangeHelper";
 
 const Form = () => {
   const { user, isAuthenticated } = useAuth0();
@@ -23,9 +25,12 @@ const Form = () => {
     mealImg: null,
     ingredients: [],
     steps: [],
+    tags: [],
   });
   const [loading, setLoading] = useState(false);
   const [recipeSubmitted, setRecipeSubmitted] = useState(false);
+
+  const TAG_OPTIONS = ["Vegan", "Vegetarian", "Gluten-Free", "Dessert"];
 
   const handleInputChange = (ev) => {
     handleInputChangeHelper(ev, setFormData);
@@ -57,6 +62,10 @@ const Form = () => {
 
   const handleRemoveStep = (index) => {
     handleRemoveStepHelper(index, setFormData);
+  };
+
+  const handleTagChange = (tag) => {
+    handleTagChangeHelper(tag, setFormData);
   };
 
   const handleSubmit = async (ev) => {
@@ -183,6 +192,19 @@ const Form = () => {
                 Add Step
               </AddButton>
 
+              <Field>
+                <Legend>Add tags:</Legend>
+                {TAG_OPTIONS.map((tag) => (
+                  <TagInput
+                    key={tag}
+                    id={tag}
+                    label={tag}
+                    checked={formData.tags.includes(tag)}
+                    onChange={() => handleTagChange(tag)}
+                  />
+                ))}
+              </Field>
+
               <Button type="submit">Add Recipe</Button>
             </>
           )}
@@ -210,6 +232,14 @@ const InputWrapper = styled.div`
     font-weight: bold;
     margin-bottom: 0.5rem;
   }
+`;
+
+const Field = styled.fieldset`
+  margin-bottom: 1rem;
+`;
+
+const Legend = styled.legend`
+  font-size: 1.1rem;
 `;
 
 export default Form;
