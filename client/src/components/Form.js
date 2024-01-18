@@ -64,7 +64,10 @@ const Form = () => {
 
     const userId = user.sub;
 
-    const newRecipe = { formData, userId };
+    const date = new Date().toLocaleString();
+    const createdBy = user.name;
+
+    const newRecipe = { formData, userId, date: date, createdBy: createdBy };
 
     try {
       setLoading(true);
