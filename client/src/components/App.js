@@ -8,6 +8,7 @@ import Form from "./Form";
 import Random from "./Random";
 import Feed from "./Feed";
 import MyRecipes from "./MyRecipes";
+import UserProfile from "./UserProfile";
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
@@ -31,6 +32,7 @@ const App = () => {
             <Route path="/random" element={<Random />} />
             <Route path="/feed" element={<Feed />} />
             <Route path="/my-recipes" element={<MyRecipes />} />
+            <Route path="/users/:userId" element={<UserProfile />} />
           </Routes>
         </BrowserRouter>
       </UserProvider>

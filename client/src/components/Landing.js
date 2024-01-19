@@ -36,7 +36,6 @@ const Landing = () => {
 };
 
 const Wrapper = styled.div`
-  margin-top: 10rem;
   margin: 10rem auto 0 auto;
   max-width: 50rem;
   display: flex;
