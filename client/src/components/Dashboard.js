@@ -1,40 +1,46 @@
 import { styled } from "styled-components";
-import { Link, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { NavLink } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 import Button from "./UI/Button";
 
 const Dashboard = () => {
-  const currentLocation = useLocation();
+  const { user: userFromContext } = useContext(UserContext);
+
   return (
     <div>
       <ButtonControl>
         <Button>
-          <NavLink
-            to="/add-recipe"
-            active={currentLocation.pathname === "/add-recipe"}
+          <StyledNavLink
+            to={`/users/${userFromContext.id}`}
+            activeclassname="active"
           >
+            My Profile
+          </StyledNavLink>
+        </Button>
+
+        <Button>
+          <StyledNavLink to="/add-recipe" activeclassname="active">
             Add New Recipe
-          </NavLink>
+          </StyledNavLink>
         </Button>
 
         <Button>
-          <NavLink to="/feed" active={currentLocation.pathname === "/feed"}>
+          <StyledNavLink to="/feed" activeclassname="active">
             My Feed
-          </NavLink>
+          </StyledNavLink>
         </Button>
 
         <Button>
-          <NavLink
-            to="/my-recipes"
-            active={currentLocation.pathname === "/my-recipes"}
-          >
+          <StyledNavLink to="/my-recipes" activeclassname="active">
             My Recipes
-          </NavLink>
+          </StyledNavLink>
         </Button>
 
         <Button>
-          <NavLink to="/random" active={currentLocation.pathname === "/random"}>
+          <StyledNavLink to="/random" activeclassname="active">
             Get Random Recipe
-          </NavLink>
+          </StyledNavLink>
         </Button>
       </ButtonControl>
     </div>
@@ -47,11 +53,16 @@ const ButtonControl = styled.div`
   width: 40rem;
 `;
 
-const NavLink = styled(Link)`
-  color: ${(props) => (props.active ? "var(--heading)" : "var(--stroke)")};
-  text-decoration: ${(props) => (props.active ? "underline" : "none")};
-  text-underline-offset: ${(props) => (props.active ? "4px" : "auto")};
+const StyledNavLink = styled(NavLink)`
+  color: var(--stroke);
+  text-decoration: none;
   font-weight: bold;
+
+  &.active {
+    color: var(--heading);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
 `;
 
 export default Dashboard;

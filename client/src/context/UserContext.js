@@ -12,6 +12,7 @@ const UserProvider = ({ children }) => {
       email: userData.email,
       name: userData.name,
       picture: userData.picture,
+      id: userData.id,
     });
   }, []);
 
@@ -35,6 +36,7 @@ const UserProvider = ({ children }) => {
       const userData = await response.json();
 
       updateUserContext(userData.data);
+      console.log(userData.data);
     } catch (err) {
       console.error("Error: ", err);
     }
