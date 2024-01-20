@@ -4,11 +4,12 @@ import UserProvider from "../context/UserContext";
 import GlobalStyles from "./GlobalStyles";
 import Header from "./Header";
 import Landing from "./Landing";
+import UserProfile from "./UserProfile";
 import Form from "./Form";
-import Random from "./Random";
 import Feed from "./Feed";
 import MyRecipes from "./MyRecipes";
-import UserProfile from "./UserProfile";
+import Search from "./Search";
+import Random from "./Random";
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
@@ -28,11 +29,12 @@ const App = () => {
           <Header />
           <Landing />
           <Routes>
+            <Route path="/users/:userId" element={<UserProfile />} />
             <Route path="/add-recipe" element={<Form />} />
-            <Route path="/random" element={<Random />} />
             <Route path="/feed" element={<Feed />} />
             <Route path="/my-recipes/:userId" element={<MyRecipes />} />
-            <Route path="/users/:userId" element={<UserProfile />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/random" element={<Random />} />
           </Routes>
         </BrowserRouter>
       </UserProvider>
