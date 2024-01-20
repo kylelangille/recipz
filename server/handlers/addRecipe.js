@@ -24,6 +24,18 @@ const addRecipe = async (req, res) => {
     const recipeCollection = db.collection("recipes");
 
     await recipeCollection.insertOne(recipeData);
+
+    const usersCollection = db.collection("users");
+    const userId = formData.userId;
+
+    await usersCollection.updateOne(
+      { id: userId },
+      {
+        $push: {
+          recipes: recipeId,
+        },
+      }
+    );
     res.status(200).json({
       status: 200,
       message: "Recipe added successfully",

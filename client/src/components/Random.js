@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "styled-components";
-import RecipeCard from "./UI/RecipeCard";
+import RandomRecipeCard from "./UI/RandomRecipeCard";
 import Button from "./UI/Button";
 
 const Random = () => {
@@ -21,7 +21,7 @@ const Random = () => {
         <>
           <Button onClick={getMeal}>Generate Recipe</Button>
           {mealList.map((meal) => (
-            <RecipeCard key={meal.idMeal} meal={meal} />
+            <RandomRecipeCard key={meal.idMeal} meal={meal} />
           ))}
         </>
       ) : (

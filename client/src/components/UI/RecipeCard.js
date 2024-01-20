@@ -1,55 +1,87 @@
 import { styled } from "styled-components";
+import { useState } from "react";
 
-const RecipeCard = ({ meal }) => {
+const RecipeCard = ({
+  mealImg,
+  recipeName,
+  createdBy,
+  ingredients,
+  steps,
+  noImage,
+}) => {
+  const [showDetails, setShowDetails] = useState(false);
+
+  const handleShowDetails = () => {
+    setShowDetails(!showDetails);
+  };
+
+  const imageSrc = mealImg ? mealImg : noImage;
+
   return (
     <Wrapper>
-      <Title>{meal.strMeal}</Title>
-      <MealImg src={meal.strMealThumb} alt={meal.strMeal} />
-      <p>Ingredients:</p>
-      <ol>
-        <li>
-          {meal.strMeasure1} {meal.strIngredient1}
-        </li>
-        <li>
-          {meal.strMeasure2} {meal.strIngredient2}
-        </li>
-        <li>
-          {meal.strMeasure3} {meal.strIngredient3}
-        </li>
-        <li>
-          {meal.strMeasure4} {meal.strIngredient4}
-        </li>
-        <li>
-          {meal.strMeasure5} {meal.strIngredient5}
-        </li>
-        <li>
-          {meal.strMeasure6} {meal.strIngredient6}
-        </li>
-      </ol>
-
-      <p>{meal.strInstructions}</p>
+      <MainContainer>
+        <Img src={imageSrc} alt={recipeName} />
+        <div>
+          <h2>{recipeName}</h2>
+          <p>Added by: {createdBy}</p>
+        </div>
+      </MainContainer>
+      <Control>
+        <DetailsButton onClick={handleShowDetails}>
+          {showDetails ? "Hide" : "Show"} details
+        </DetailsButton>
+      </Control>
+      {showDetails && (
+        <>
+          <div>
+            <p>Ingredients:</p>
+            <ol>
+              {ingredients.map((ingredient, index) => (
+                <li key={index}>
+                  <span>{ingredient.measure}</span> {ingredient.ingredient}
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div>
+            <p>Instructions:</p>
+            <ol>
+              {steps.map((step, index) => (
+                <li key={index}>{step}</li>
+              ))}
+            </ol>
+          </div>
+        </>
+      )}
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  border: 1px solid var(--stroke);
+  border: 1px solid #000;
   border-radius: 12px;
-  width: 20rem;
-  margin-top: 1rem;
-  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.3);
+  margin: 1rem auto 0 auto;
+  max-width: 50rem;
 `;
 
-const Title = styled.h2`
-  text-align: center;
+const Img = styled.img`
+  border-radius: 12px;
+  margin: 10px 0 10px 10px;
+  max-width: 10rem;
+  max-height: 10rem;
 `;
 
-const MealImg = styled.img`
-  max-width: 15rem;
-  max-height: 15rem;
-  margin: 0 auto 1rem auto;
-  border-radius: 12px;
-  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.3);
+const MainContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
 `;
+
+const Control = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const DetailsButton = styled.button``;
 
 export default RecipeCard;
