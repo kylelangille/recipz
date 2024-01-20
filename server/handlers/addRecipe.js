@@ -36,16 +36,21 @@ const addRecipe = async (req, res) => {
         },
       }
     );
+
     res.status(200).json({
       status: 200,
       message: "Recipe added successfully",
       data: recipeData,
     });
   } catch (err) {
-    console.error("Error: ", err);
-    res
-      .status(500)
-      .json({ status: 500, message: "Recipe could not be added", data: null });
+    console.error("Error adding recipe:", err);
+
+    res.status(500).json({
+      status: 500,
+      message: "Recipe could not be added",
+      error: err.message,
+      data: null,
+    });
   } finally {
     client.close();
   }
