@@ -15,6 +15,7 @@ const MyRecipes = () => {
         setRecipes(data.data);
       });
   }, [userId]);
+
   return (
     <Wrapper>
       {recipes.length <= 0 ? (
