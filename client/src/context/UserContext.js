@@ -25,9 +25,9 @@ const UserProvider = ({ children }) => {
         body: JSON.stringify({
           email: newUser.email,
           name: newUser.name,
-          picture: newUser.picture,
+          picture: newUser.picture || "",
           id: newUser.sub,
-          recipes: newUser.recipes,
+          recipes: newUser.recipes || [],
         }),
       });
 
