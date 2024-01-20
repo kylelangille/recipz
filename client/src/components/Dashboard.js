@@ -41,6 +41,12 @@ const Dashboard = () => {
         </Button>
 
         <Button>
+          <StyledNavLink to="/search" activeclassname="active">
+            Search
+          </StyledNavLink>
+        </Button>
+
+        <Button>
           <StyledNavLink to="/random" activeclassname="active">
             Get Random Recipe
           </StyledNavLink>
