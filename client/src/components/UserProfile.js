@@ -16,7 +16,27 @@ const UserProfile = () => {
       .then((data) => {
         setUserData(data.data);
       });
-  }, []);
+  }, [userId]);
+
+  if (userFromContext.id === userId) {
+    return (
+      <Wrapper>
+        <HeadContainer>
+          <Avatar
+            src={userFromContext.picture}
+            alt={`Picture of ${userFromContext.name}`}
+          />
+          <SubContainer>
+            <h2>{userFromContext.name}</h2>
+          </SubContainer>
+        </HeadContainer>
+        <Button>Edit Profile</Button>
+        <RecipeContainer>
+          <h3>{userFromContext.name}'s Recipes:</h3>
+        </RecipeContainer>
+      </Wrapper>
+    );
+  }
 
   return (
     <Wrapper>
@@ -33,7 +53,6 @@ const UserProfile = () => {
               <h2>{userData.name}</h2>
             </SubContainer>
           </HeadContainer>
-          {userFromContext.id === userData.id && <Button>Edit Profile</Button>}
           <RecipeContainer>
             <h3>{userData.name}'s Recipes:</h3>
           </RecipeContainer>

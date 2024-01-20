@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { styled } from "styled-components";
 import heroImg from "../assets/food-img.png";
+import LoadingCircle from "./UI/LoadingCircle";
 import Dashboard from "./Dashboard";
 
 const Landing = () => {
@@ -19,7 +20,7 @@ const Landing = () => {
               <Dashboard />
             </>
           ) : (
-            <p>Loading user data...</p>
+            <LoadingCircle />
           )}
         </Control>
       ) : (
