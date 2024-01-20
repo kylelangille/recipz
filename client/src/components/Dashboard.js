@@ -32,7 +32,10 @@ const Dashboard = () => {
         </Button>
 
         <Button>
-          <StyledNavLink to="/my-recipes" activeclassname="active">
+          <StyledNavLink
+            to={`/my-recipes/${userFromContext.id}`}
+            activeclassname="active"
+          >
             My Recipes
           </StyledNavLink>
         </Button>

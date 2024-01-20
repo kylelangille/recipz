@@ -1,6 +1,7 @@
 "use strict";
 
 const { MongoClient } = require("mongodb");
+const { v4: uuidv4 } = require("uuid");
 const MONGO_URI = process.env.MONGO_URI;
 
 const addUser = async (req, res) => {
@@ -25,6 +26,7 @@ const addUser = async (req, res) => {
         data: existingUser,
       });
     } else {
+      userData._id = uuidv4();
       await usersCollection.insertOne(userData);
       res.status(200).json({
         status: 200,

@@ -31,9 +31,6 @@ const UserProfile = () => {
           </SubContainer>
         </HeadContainer>
         <Button>Edit Profile</Button>
-        <RecipeContainer>
-          <h3>{userFromContext.name}'s Recipes:</h3>
-        </RecipeContainer>
       </Wrapper>
     );
   }
@@ -53,9 +50,6 @@ const UserProfile = () => {
               <h2>{userData.name}</h2>
             </SubContainer>
           </HeadContainer>
-          <RecipeContainer>
-            <h3>{userData.name}'s Recipes:</h3>
-          </RecipeContainer>
         </>
       )}
     </Wrapper>
@@ -80,9 +74,5 @@ const Avatar = styled.img`
 `;
 
 const SubContainer = styled.div``;
-
-const RecipeContainer = styled.div`
-  margin-top: 2rem;
-`;
 
 export default UserProfile;

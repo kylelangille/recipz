@@ -13,6 +13,7 @@ const UserProvider = ({ children }) => {
       name: userData.name,
       picture: userData.picture,
       id: userData.id,
+      recipe: userData.receipes,
     });
   }, []);
 
@@ -26,6 +27,7 @@ const UserProvider = ({ children }) => {
           name: newUser.name,
           picture: newUser.picture,
           id: newUser.sub,
+          recipes: newUser.recipes,
         }),
       });
 
@@ -36,6 +38,7 @@ const UserProvider = ({ children }) => {
       const userData = await response.json();
 
       updateUserContext(userData.data);
+      console.log(userData.data);
     } catch (err) {
       console.error("Error: ", err);
     }

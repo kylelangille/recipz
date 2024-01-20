@@ -1,6 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "styled-components";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../context/UserContext";
 import Button from "./UI/Button";
 import AddButton from "./UI/AddButton";
 import RemoveButton from "./UI/RemoveButton";
@@ -19,7 +20,8 @@ import { handleRemoveStepHelper } from "../form-helpers/handleRemoveStepHelper";
 import { handleTagChangeHelper } from "../form-helpers/handleTagChangeHelper";
 
 const Form = () => {
-  const { user, isAuthenticated } = useAuth0();
+  const { user: userFromContext } = useContext(UserContext);
+  const { isAuthenticated } = useAuth0();
   const [formData, setFormData] = useState({
     recipeName: "",
     mealImg: null,
@@ -71,10 +73,10 @@ const Form = () => {
   const handleSubmit = async (ev) => {
     ev.preventDefault();
 
-    const userId = user.sub;
+    const userId = userFromContext.id;
 
     const date = new Date().toLocaleString();
-    const createdBy = user.name;
+    const createdBy = userFromContext.name;
 
     const newRecipe = { formData, userId, date: date, createdBy: createdBy };
 
