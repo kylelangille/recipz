@@ -32,7 +32,13 @@ const Form = () => {
   const [loading, setLoading] = useState(false);
   const [recipeSubmitted, setRecipeSubmitted] = useState(false);
 
-  const TAG_OPTIONS = ["Vegan", "Vegetarian", "Gluten-Free", "Dessert"];
+  const TAG_OPTIONS = [
+    "Vegan",
+    "Vegetarian",
+    "Gluten-Free",
+    "Breakfast",
+    "Dessert",
+  ];
 
   const handleInputChange = (ev) => {
     handleInputChangeHelper(ev, setFormData);
