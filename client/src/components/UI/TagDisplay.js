@@ -21,7 +21,7 @@ const TagDisplay = ({ tags }) => {
   return (
     <Wrapper>
       {tags.map((tag) => (
-        <Tag key={tag} backgroundColor={getTagBackgroundColor(tag)}>
+        <Tag key={tag} backgroundcolor={getTagBackgroundColor(tag)}>
           {tag}
         </Tag>
       ))}
@@ -30,12 +30,14 @@ const TagDisplay = ({ tags }) => {
 };
 
 const Wrapper = styled.div`
-  margin-top: 10px;
+  margin-top: 5px;
+  gap: 5px;
+  display: flex;
 `;
 
 const Tag = styled.span`
   padding: 5px 10px;
-  background: ${(props) => props.backgroundColor || "lightgray"};
+  background: ${(props) => props.backgroundcolor || "lightgray"};
   border-radius: 9px;
   font-weight: bold;
 `;

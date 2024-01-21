@@ -7,6 +7,7 @@ const { addRecipe } = require("./handlers/addRecipe");
 const { addUser } = require("./handlers/AddUser");
 const { getUserProfile } = require("./handlers/getUserProfile");
 const { getRecipes } = require("./handlers/getRecipes");
+const { deleteRecipe } = require("./handlers/deleteRecipe");
 
 const PORT = 4000;
 
@@ -31,6 +32,7 @@ express()
   .post("/api/users", addUser)
   .get("/api/users/:userId", getUserProfile)
   .get("/api/all-recipes-by/:userId", getRecipes)
+  .delete("/api/delete-recipe", deleteRecipe)
   //
   .listen(PORT, () => {
     console.info(`Listening on port ${PORT}`);

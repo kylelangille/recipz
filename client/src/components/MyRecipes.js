@@ -33,6 +33,8 @@ const MyRecipes = () => {
               steps={recipe.formData.steps}
               noImage={noImageFound}
               tags={recipe.formData.tags}
+              recipeId={recipe._id}
+              userId={userId}
             />
           ))}
         </>
