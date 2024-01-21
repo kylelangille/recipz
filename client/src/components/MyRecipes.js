@@ -12,6 +12,7 @@ const MyRecipes = () => {
     fetch(`/api/all-recipes-by/${userId}`)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data.data);
         setRecipes(data.data);
       });
   }, [userId]);
@@ -31,6 +32,7 @@ const MyRecipes = () => {
               ingredients={recipe.formData.ingredients}
               steps={recipe.formData.steps}
               noImage={noImageFound}
+              tags={recipe.formData.tags}
             />
           ))}
         </>

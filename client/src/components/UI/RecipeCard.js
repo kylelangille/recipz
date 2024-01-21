@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import { useState } from "react";
+import TagDisplay from "./TagDisplay";
 
 const RecipeCard = ({
   mealImg,
@@ -8,6 +9,7 @@ const RecipeCard = ({
   ingredients,
   steps,
   noImage,
+  tags,
 }) => {
   const [showDetails, setShowDetails] = useState(false);
 
@@ -36,6 +38,7 @@ const RecipeCard = ({
         <div>
           <h2>{recipeName}</h2>
           <p>Added by: {createdBy}</p>
+          <TagDisplay tags={tags} />
         </div>
       </MainContainer>
       <Control>
