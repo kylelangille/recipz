@@ -7,3 +7,4 @@
 | `POST`   | `/api/add-recipe`             | Adds a recipe to the logged-in user's collection                    |
 | `DELETE` | `/api/remove-recipe`          | Removes a recipe from a user's collection                           |
 | `POST`   | `/api/users`                  | Adds or retrives userData based on logged in user                   |
+| `GET`    | `/api/all-recipes/:recipeId`  | Retrives specific recipe data based on provided recipeId            |
