@@ -8,6 +8,7 @@ const { addUser } = require("./handlers/AddUser");
 const { getUserProfile } = require("./handlers/getUserProfile");
 const { getRecipes } = require("./handlers/getRecipes");
 const { deleteRecipe } = require("./handlers/deleteRecipe");
+const { getSpecificRecipe } = require("./handlers/getSpecificRecipe");
 
 const PORT = 4000;
 
@@ -32,6 +33,7 @@ express()
   .post("/api/users", addUser)
   .get("/api/users/:userId", getUserProfile)
   .get("/api/all-recipes-by/:userId", getRecipes)
+  .get("/api/all-recipes/:recipeId", getSpecificRecipe)
   .delete("/api/delete-recipe", deleteRecipe)
   //
   .listen(PORT, () => {

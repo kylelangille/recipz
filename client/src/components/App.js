@@ -10,6 +10,7 @@ import Feed from "./Feed";
 import MyRecipes from "./MyRecipes";
 import Search from "./Search";
 import Random from "./Random";
+import RecipePage from "./RecipePage";
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
@@ -35,6 +36,7 @@ const App = () => {
             <Route path="/my-recipes/:userId" element={<MyRecipes />} />
             <Route path="/search" element={<Search />} />
             <Route path="/random" element={<Random />} />
+            <Route path="/all-recipes/:recipeId" element={<RecipePage />} />
           </Routes>
         </BrowserRouter>
       </UserProvider>
