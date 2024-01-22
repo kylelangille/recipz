@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import TagDisplay from "./TagDisplay";
 
@@ -69,7 +70,9 @@ const RecipeCard = ({
       <MainContainer>
         <Img src={imageSrc} alt={recipeName} />
         <div>
-          <h2>{recipeName}</h2>
+          <StyledLink to={`/all-recipes/${recipeId}`}>
+            <h2>{recipeName}</h2>
+          </StyledLink>
           <p>Added by: {createdBy}</p>
           <TagDisplay tags={tags} />
         </div>
@@ -131,6 +134,8 @@ const Wrapper = styled.div`
   margin: 1rem auto 0 auto;
   max-width: 50rem;
 `;
+
+const StyledLink = styled(Link)``;
 
 const Img = styled.img`
   border-radius: 12px;
