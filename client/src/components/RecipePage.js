@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import TagDisplay from "./UI/TagDisplay";
@@ -17,10 +17,11 @@ const RecipePage = () => {
     fetch(`/api/all-recipes/${recipeId}`)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data.data);
         setRecipeData(data.data);
         setLoading(false);
       });
-  }, [recipeId]);
+  }, []);
 
   const {
     formData: {
@@ -43,8 +44,13 @@ const RecipePage = () => {
           <HeadContainer>
             <MealImg src={imageSrc} />
             <SubContainer>
-              <h3>{recipeName}</h3>
-              <p>Created by:</p>
+              <Title>{recipeName}</Title>
+              <p>
+                Created by:{" "}
+                <StyledLink to={`/users/${recipeData.userId}`}>
+                  {recipeData.createdBy}
+                </StyledLink>
+              </p>
               <TagDisplay tags={tags} />
             </SubContainer>
           </HeadContainer>
@@ -81,6 +87,7 @@ const Wrapper = styled.div`
 
 const HeadContainer = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const SubContainer = styled.div`
@@ -88,16 +95,25 @@ const SubContainer = styled.div`
   flex-direction: column;
 `;
 
+const Title = styled.h2`
+  font-size: 2rem;
+`;
+
+const StyledLink = styled(Link)``;
+
 const MealImg = styled.img`
   max-width: 10rem;
   max-height: 10rem;
+  margin-right: 1rem;
 `;
 
 const DetailsContainer = styled.div`
-  margin-left: 2rem;
+  margin-left: 11rem;
 `;
 
-const IngredientContainer = styled.div``;
+const IngredientContainer = styled.div`
+  margin-bottom: 1rem;
+`;
 
 const StepsContainer = styled.div``;
 
