@@ -77,6 +77,11 @@ const NavList = styled.ul`
 
 const NavLink = styled(Link)`
   text-decoration: none;
+  color: var(--heading);
+
+  &:visited {
+    color: var(--heading);
+  }
 `;
 
 export default Header;

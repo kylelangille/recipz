@@ -16,7 +16,6 @@ const Landing = () => {
         <Control>
           {userFromContext && userFromContext.name ? (
             <>
-              <p>Welcome, {userFromContext.name}!</p>
               <Dashboard />
             </>
           ) : (
@@ -37,13 +36,9 @@ const Landing = () => {
 };
 
 const Wrapper = styled.div`
-  margin: 10rem auto 0 auto;
+  margin: 7rem auto 0 auto;
   max-width: 50rem;
   display: flex;
-
-  p {
-    font-size: 1.2rem;
-  }
 `;
 
 const SubWrapper = styled.div`

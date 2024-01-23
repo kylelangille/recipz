@@ -32,7 +32,7 @@ const Random = () => {
 };
 
 const Wrapper = styled.div`
-  margin: 5rem auto 0 auto;
+  margin: 7rem auto 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;

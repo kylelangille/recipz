@@ -228,7 +228,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 5rem auto 0 auto;
+  margin: 7rem auto 0 auto;
 `;
 
 const InputWrapper = styled.div`
