@@ -31,13 +31,12 @@ const App = () => {
         <BrowserRouter>
           <GlobalStyles />
           <Header />
-          <AppContainer isAuthenticated={isAuthenticated}>
+          <AppContainer>
             {!isAuthenticated && (
               <LandingContainer>
                 <Landing />
               </LandingContainer>
             )}
-
             {isAuthenticated && (
               <DashboardContainer>
                 <Dashboard />
@@ -67,20 +66,10 @@ const App = () => {
 };
 
 const AppContainer = styled.div`
-  /* display: flex;
-  max-width: 1200px;
-  margin: 0 auto; */
-
   display: flex;
   max-width: 1200px;
   margin: 0 auto;
-  align-items: ${({ isAuthenticated }) =>
-    isAuthenticated ? "flex-start" : "center"};
   justify-content: center;
-
-  @media (min-width: 700px) {
-    flex-direction: row;
-  }
 `;
 
 const MainContent = styled.div`
