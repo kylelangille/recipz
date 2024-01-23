@@ -13,7 +13,7 @@ const Landing = () => {
   return (
     <Wrapper>
       {isAuthenticated ? (
-        <Control>
+        <>
           {userFromContext && userFromContext.name ? (
             <>
               <Dashboard />
@@ -21,7 +21,7 @@ const Landing = () => {
           ) : (
             <LoadingCircle />
           )}
-        </Control>
+        </>
       ) : (
         <Content>
           <HeroImg src={heroImg} />
@@ -37,8 +37,15 @@ const Landing = () => {
 
 const Wrapper = styled.div`
   margin: 7rem auto 0 auto;
-  max-width: 50rem;
+`;
+
+const Content = styled.div`
   display: flex;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+    margin: 0 auto;
+  }
 `;
 
 const SubWrapper = styled.div`
@@ -66,22 +73,6 @@ const HeroImg = styled.img`
   @media (max-width: 700px) {
     max-width: 20rem;
     max-height: 20rem;
-  }
-`;
-
-const Control = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  width: 30rem;
-`;
-
-const Content = styled.div`
-  display: flex;
-
-  @media (max-width: 700px) {
-    flex-direction: column;
-    margin: 0 auto;
   }
 `;
 

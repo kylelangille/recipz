@@ -12,7 +12,6 @@ import MyRecipes from "./MyRecipes";
 import Search from "./Search";
 import Random from "./Random";
 import RecipePage from "./RecipePage";
-import Dashboard from "./Dashboard";
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
@@ -37,11 +36,6 @@ const App = () => {
                 <Landing />
               </LandingContainer>
             )}
-            {isAuthenticated && (
-              <DashboardContainer>
-                <Dashboard />
-              </DashboardContainer>
-            )}
             <MainContent>
               <Routes>
                 <Route path="/users/:userId" element={<UserProfile />} />
@@ -53,11 +47,6 @@ const App = () => {
                 <Route path="/all-recipes/:recipeId" element={<RecipePage />} />
               </Routes>
             </MainContent>
-            {isAuthenticated && (
-              <DashboardContainer>
-                <Dashboard />
-              </DashboardContainer>
-            )}
           </AppContainer>
         </BrowserRouter>
       </UserProvider>
@@ -76,16 +65,8 @@ const MainContent = styled.div`
   flex: 1;
 `;
 
-const DashboardContainer = styled.div`
-  flex-shrink: 0;
-  width: 250px;
-`;
-
 const LandingContainer = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: absolute;
 `;
 
 export default App;

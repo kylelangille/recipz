@@ -2,7 +2,6 @@ import { styled } from "styled-components";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
-// import Button from "./UI/Button";
 import {
   FaUser,
   FaCirclePlus,
@@ -91,11 +90,15 @@ const Dashboard = () => {
 };
 
 const Navigation = styled.nav`
-  display: flex;
-  flex-direction: column;
-  max-width: 20rem;
-  margin: 0 auto 0 auto;
   border-right: 1px solid #ffffff;
+  width: 300px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding-top: 110px;
+  z-index: -1;
 `;
 
 const NavList = styled.ul`
