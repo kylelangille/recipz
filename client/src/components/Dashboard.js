@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "styled-components";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
@@ -13,6 +14,7 @@ import {
 } from "react-icons/fa6";
 
 const Dashboard = () => {
+  const { logout } = useAuth0();
   const { user: userFromContext } = useContext(UserContext);
 
   return (
@@ -77,12 +79,12 @@ const Dashboard = () => {
         </ListItem>
 
         <ListItem>
-          <StyledNavLink to="/log-out" activeclassname="active">
+          <LogOutButton onClick={() => logout()} className="logout">
             <Icon>
               <FaArrowRightToBracket />
             </Icon>
             Log out
-          </StyledNavLink>
+          </LogOutButton>
         </ListItem>
       </NavList>
     </Navigation>
@@ -128,14 +130,26 @@ const StyledNavLink = styled(NavLink)`
     color: lightgray;
   }
 
-  &:visited {
-    color: var(--heading);
-  }
-
   &.active {
     background: #999;
     border-radius: 6px;
     padding: 5px;
+    color: var(--background);
+  }
+`;
+
+const LogOutButton = styled.button`
+  display: flex;
+  align-items: center;
+  color: var(--heading);
+  background: var(--background);
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    color: #a51c30;
   }
 `;
 

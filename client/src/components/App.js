@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserProvider from "../context/UserContext";
 import GlobalStyles from "./GlobalStyles";
 import { styled } from "styled-components";
-import Header from "./Header";
 import Landing from "./Landing";
 import UserProfile from "./UserProfile";
 import Form from "./Form";
@@ -29,7 +28,6 @@ const App = () => {
       <UserProvider>
         <BrowserRouter>
           <GlobalStyles />
-          <Header />
           <AppContainer>
             {!isAuthenticated && (
               <LandingContainer>

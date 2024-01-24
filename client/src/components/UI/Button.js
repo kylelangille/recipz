@@ -1,7 +1,16 @@
 import { styled } from "styled-components";
 
 const Button = ({ children, ...props }) => {
-  return <Wrapper onClick={props.onClick}>{children}</Wrapper>;
+  const customText = props.customText;
+  const textShadow = props.textShadow;
+  return (
+    <Wrapper
+      onClick={props.onClick}
+      style={{ fontSize: customText, textShadow: textShadow }}
+    >
+      {children}
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.button`
