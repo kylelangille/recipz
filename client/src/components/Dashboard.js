@@ -12,6 +12,7 @@ import {
   FaCircleQuestion,
   FaArrowRightToBracket,
 } from "react-icons/fa6";
+import cookingEmoji from "../assets/emoji.png";
 
 const Dashboard = () => {
   const { logout } = useAuth0();
@@ -19,6 +20,7 @@ const Dashboard = () => {
 
   return (
     <Navigation>
+      <Img src={cookingEmoji} />
       <NavList>
         <ListItem>
           <StyledNavLink
@@ -99,12 +101,19 @@ const Navigation = styled.nav`
   left: 0;
   height: 100vh;
   overflow-y: auto;
-  padding-top: 110px;
+  padding-top: 30px;
   z-index: -1;
+`;
+
+const Img = styled.img`
+  max-width: 5rem;
+  max-height: 5rem;
+  margin: 0 auto;
 `;
 
 const NavList = styled.ul`
   list-style-type: none;
+  margin-top: 2rem;
 `;
 
 const ListItem = styled.li`

@@ -108,11 +108,13 @@ const Form = () => {
     }
   };
 
+  const bigText = "2rem";
+
   return (
     <Wrapper>
       {isAuthenticated ? (
         <form onSubmit={handleSubmit}>
-          <h2>Add a new recipe:</h2>
+          <Title>Add a new recipe:</Title>
           {loading ? (
             <>
               <LoadingCircle />
@@ -131,7 +133,7 @@ const Form = () => {
                 value={formData.recipeName}
                 onChange={handleInputChange}
               />
-
+              <br />
               <label htmlFor="mealImg">
                 Select an image:
                 <input
@@ -142,7 +144,8 @@ const Form = () => {
                   onChange={handleImgChange}
                 />
               </label>
-
+              <br />
+              <br />
               {formData.ingredients.map((ingredient, index) => (
                 <InputWrapper key={index}>
                   <Input
@@ -179,6 +182,8 @@ const Form = () => {
                 Add Ingredient
               </AddButton>
 
+              <br />
+
               {formData.steps.map((step, index) => (
                 <InputWrapper key={index}>
                   <Input
@@ -200,6 +205,8 @@ const Form = () => {
                 Add Step
               </AddButton>
 
+              <br />
+
               <Field>
                 <Legend>Add tags:</Legend>
                 {TAG_OPTIONS.map((tag) => (
@@ -212,8 +219,11 @@ const Form = () => {
                   />
                 ))}
               </Field>
-
-              <Button type="submit">Add Recipe</Button>
+              <SubmitWrapper>
+                <Button type="submit" customText={bigText}>
+                  Add Recipe
+                </Button>
+              </SubmitWrapper>
             </>
           )}
         </form>
@@ -228,7 +238,12 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 7rem auto 0 auto;
+  margin: 7rem auto 4rem auto;
+`;
+
+const Title = styled.h2`
+  margin-bottom: 1rem;
+  font-size: 2rem;
 `;
 
 const InputWrapper = styled.div`
@@ -243,11 +258,16 @@ const InputWrapper = styled.div`
 `;
 
 const Field = styled.fieldset`
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 `;
 
 const Legend = styled.legend`
   font-size: 1.1rem;
+`;
+
+const SubmitWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 export default Form;
