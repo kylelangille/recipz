@@ -44,7 +44,7 @@ const MyRecipes = () => {
 };
 
 const Wrapper = styled.div`
-  margin: 7rem auto 0 auto;
+  margin: 5rem auto 0 auto;
 `;
 
 export default MyRecipes;

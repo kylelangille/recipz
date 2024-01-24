@@ -238,7 +238,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 7rem auto 4rem auto;
+  margin: 5rem auto 4rem auto;
 `;
 
 const Title = styled.h2`

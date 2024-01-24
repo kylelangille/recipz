@@ -15,11 +15,15 @@ const Random = () => {
       .catch((err) => console.log(err));
   };
 
+  const bigText = "2rem";
+
   return (
     <Wrapper>
       {isAuthenticated ? (
         <>
-          <Button onClick={getMeal}>Generate Recipe</Button>
+          <Button onClick={getMeal} customText={bigText}>
+            Generate Recipe
+          </Button>
           {mealList.map((meal) => (
             <RandomRecipeCard key={meal.idMeal} meal={meal} />
           ))}
