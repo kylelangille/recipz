@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/UserContext";
-import TagDisplay from "./UI/TagDisplay";
+import TagDisplay from "./recipe-display/TagDisplay";
 import LoadingCircle from "./UI/LoadingCircle";
 import noImage from "../assets/no-image.png";
 

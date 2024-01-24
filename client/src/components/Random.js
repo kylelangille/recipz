@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "styled-components";
-import RandomRecipeCard from "./UI/RandomRecipeCard";
+import RandomRecipeCard from "./recipe-display/RandomRecipeCard";
 import Button from "./UI/Button";
 
 const Random = () => {

@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import LoadingCircle from "./UI/LoadingCircle";
-import RecipeCard from "./UI/RecipeCard";
+import RecipeCard from "./recipe-display/RecipeCard";
 import noImageFound from "../assets/no-image.png";
 
 const MyRecipes = () => {
