@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/UserContext";
-import TagDisplay from "./UI/TagDisplay";
+import TagDisplay from "./recipe-display/TagDisplay";
 import LoadingCircle from "./UI/LoadingCircle";
 import noImage from "../assets/no-image.png";
 
@@ -81,7 +81,7 @@ const RecipePage = () => {
 };
 
 const Wrapper = styled.div`
-  margin: 5rem auto 0 auto;
+  margin: 7rem auto 0 auto;
   max-width: 50rem;
 `;
 
@@ -99,7 +99,10 @@ const Title = styled.h2`
   font-size: 2rem;
 `;
 
-const StyledLink = styled(Link)``;
+const StyledLink = styled(Link)`
+  color: var(--heading);
+  text-decoration: none;
+`;
 
 const MealImg = styled.img`
   max-width: 10rem;

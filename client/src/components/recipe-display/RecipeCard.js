@@ -135,7 +135,10 @@ const Wrapper = styled.div`
   max-width: 50rem;
 `;
 
-const StyledLink = styled(Link)``;
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: var(--heading);
+`;
 
 const Img = styled.img`
   border-radius: 12px;

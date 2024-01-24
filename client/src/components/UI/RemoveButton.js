@@ -17,6 +17,7 @@ const Button = styled.button`
   transition: 0.3s all ease-in-out;
   border: 1px solid var(--stroke);
   margin-top: 2rem;
+  padding: 10px;
 
   &:hover {
     background: #ab3337;

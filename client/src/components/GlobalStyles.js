@@ -66,5 +66,7 @@ h6 {
 
 body {
     font-family: 'Atkinson Hyperlegible', sans-serif;
+    background: var(--background);
+    color: var(--heading);
 }
 `;

@@ -12,7 +12,7 @@ const Search = () => {
 
 const Wrapper = styled.div`
   display: flex;
-  margin: 5rem auto 0 auto;
+  margin: 7rem auto 0 auto;
   max-width: 30rem;
 `;
 

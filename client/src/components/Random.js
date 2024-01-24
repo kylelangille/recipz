@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "styled-components";
-import RandomRecipeCard from "./UI/RandomRecipeCard";
+import RandomRecipeCard from "./recipe-display/RandomRecipeCard";
 import Button from "./UI/Button";
 
 const Random = () => {
@@ -15,11 +15,15 @@ const Random = () => {
       .catch((err) => console.log(err));
   };
 
+  const bigText = "2rem";
+
   return (
     <Wrapper>
       {isAuthenticated ? (
         <>
-          <Button onClick={getMeal}>Generate Recipe</Button>
+          <Button onClick={getMeal} customText={bigText}>
+            Generate Recipe
+          </Button>
           {mealList.map((meal) => (
             <RandomRecipeCard key={meal.idMeal} meal={meal} />
           ))}
@@ -32,7 +36,7 @@ const Random = () => {
 };
 
 const Wrapper = styled.div`
-  margin: 5rem auto 0 auto;
+  margin: 7rem auto 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;

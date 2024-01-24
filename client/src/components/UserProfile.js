@@ -50,7 +50,7 @@ const UserProfile = () => {
 };
 
 const Wrapper = styled.div`
-  margin: 10rem auto 0 auto;
+  margin: 5rem auto 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;

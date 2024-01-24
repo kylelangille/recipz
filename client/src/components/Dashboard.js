@@ -1,76 +1,164 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "styled-components";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
-import Button from "./UI/Button";
+import {
+  FaUser,
+  FaCirclePlus,
+  FaNewspaper,
+  FaBookOpenReader,
+  FaSearchengin,
+  FaCircleQuestion,
+  FaArrowRightToBracket,
+} from "react-icons/fa6";
+import cookingEmoji from "../assets/emoji.png";
 
 const Dashboard = () => {
+  const { logout } = useAuth0();
   const { user: userFromContext } = useContext(UserContext);
 
   return (
-    <div>
-      <ButtonControl>
-        <Button>
+    <Navigation>
+      <Img src={cookingEmoji} />
+      <NavList>
+        <ListItem>
           <StyledNavLink
             to={`/users/${userFromContext.id}`}
             activeclassname="active"
           >
+            <Icon>
+              <FaUser />
+            </Icon>
             My Profile
           </StyledNavLink>
-        </Button>
+        </ListItem>
 
-        <Button>
+        <ListItem>
           <StyledNavLink to="/add-recipe" activeclassname="active">
+            <Icon>
+              <FaCirclePlus />
+            </Icon>
             Add New Recipe
           </StyledNavLink>
-        </Button>
-
-        <Button>
+        </ListItem>
+        <ListItem>
           <StyledNavLink to="/feed" activeclassname="active">
+            <Icon>
+              <FaNewspaper />
+            </Icon>
             My Feed
           </StyledNavLink>
-        </Button>
-
-        <Button>
+        </ListItem>
+        <ListItem>
           <StyledNavLink
             to={`/my-recipes/${userFromContext.id}`}
             activeclassname="active"
           >
+            <Icon>
+              <FaBookOpenReader />
+            </Icon>
             My Recipes
           </StyledNavLink>
-        </Button>
+        </ListItem>
 
-        <Button>
+        <ListItem>
           <StyledNavLink to="/search" activeclassname="active">
+            <Icon>
+              <FaSearchengin />
+            </Icon>
             Search
           </StyledNavLink>
-        </Button>
+        </ListItem>
 
-        <Button>
+        <ListItem>
           <StyledNavLink to="/random" activeclassname="active">
+            <Icon>
+              <FaCircleQuestion />
+            </Icon>
             Get Random Recipe
           </StyledNavLink>
-        </Button>
-      </ButtonControl>
-    </div>
+        </ListItem>
+
+        <ListItem>
+          <LogOutButton onClick={() => logout()} className="logout">
+            <Icon>
+              <FaArrowRightToBracket />
+            </Icon>
+            Log out
+          </LogOutButton>
+        </ListItem>
+      </NavList>
+    </Navigation>
   );
 };
 
-const ButtonControl = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 40rem;
+const Navigation = styled.nav`
+  border-right: 1px solid #ffffff;
+  width: 300px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding-top: 30px;
+  z-index: -1;
+`;
+
+const Img = styled.img`
+  max-width: 5rem;
+  max-height: 5rem;
+  margin: 0 auto;
+`;
+
+const NavList = styled.ul`
+  list-style-type: none;
+  margin-top: 2rem;
+`;
+
+const ListItem = styled.li`
+  color: #ffffff;
+  margin-bottom: 10px;
+`;
+
+const Icon = styled.div`
+  margin-right: 1rem;
 `;
 
 const StyledNavLink = styled(NavLink)`
-  color: var(--stroke);
   text-decoration: none;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  margin-right: 2rem;
+  color: var(--heading);
+
+  &:hover {
+    color: lightgray;
+  }
 
   &.active {
-    color: var(--heading);
-    text-decoration: underline;
-    text-underline-offset: 4px;
+    background: #999;
+    border-radius: 6px;
+    padding: 5px;
+    color: var(--background);
+  }
+`;
+
+const LogOutButton = styled.button`
+  display: flex;
+  align-items: center;
+  color: var(--heading);
+  background: var(--background);
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    color: #a51c30;
   }
 `;
 
