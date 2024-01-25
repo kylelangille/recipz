@@ -3,10 +3,18 @@ import { styled } from "styled-components";
 const Button = ({ children, ...props }) => {
   const customText = props.customText;
   const textShadow = props.textShadow;
+  const customDisplay = props.customDisplay;
+  const customAlign = props.customAlign;
+
   return (
     <Wrapper
       onClick={props.onClick}
-      style={{ fontSize: customText, textShadow: textShadow }}
+      style={{
+        fontSize: customText,
+        textShadow: textShadow,
+        display: customDisplay,
+        alignItems: customAlign,
+      }}
     >
       {children}
     </Wrapper>

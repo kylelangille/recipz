@@ -13,7 +13,9 @@ const UserProvider = ({ children }) => {
       name: userData.name,
       picture: userData.picture,
       id: userData.id,
-      recipe: userData.receipes,
+      recipe: userData.recipes,
+      following: userData.following,
+      followers: userData.followers,
     });
   }, []);
 
@@ -28,6 +30,8 @@ const UserProvider = ({ children }) => {
           picture: newUser.picture || "",
           id: newUser.sub,
           recipes: newUser.recipes || [],
+          following: newUser.following || [],
+          followers: newUser.followers || [],
         }),
       });
 
