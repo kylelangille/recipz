@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import { useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/UserContext";
+import { FaPersonCirclePlus } from "react-icons/fa6";
 import LoadingCircle from "./UI/LoadingCircle";
 import Button from "./UI/Button";
 
@@ -21,11 +22,16 @@ const UserProfile = () => {
       fetch(`/api/users/${userId}`)
         .then((res) => res.json())
         .then((data) => {
+          console.log(data.data);
           setUserData(data.data);
           setLoading(false);
         });
     }
   }, [userId, userFromContext]);
+
+  const customDisplay = "flex";
+  const customAlign = "center";
+  const mediumText = "1.2rem";
 
   return (
     <Wrapper>
@@ -40,9 +46,34 @@ const UserProfile = () => {
             />
             <SubContainer>
               <h2>{userData.name}</h2>
+              <p>
+                <span>
+                  Following:{" "}
+                  {userData.following ? userData.following.length : 0}
+                </span>{" "}
+                /{" "}
+                <span>
+                  Followers:{" "}
+                  {userData.followers ? userData.followers.length : 0}
+                </span>
+              </p>
             </SubContainer>
           </HeadContainer>
           {userFromContext.id === userId && <Button>Edit Profile</Button>}
+          {!userFromContext.following ||
+            (!userFromContext.following.includes(userId) &&
+              userFromContext.id !== userId && (
+                <Button
+                  customDisplay={customDisplay}
+                  customAlign={customAlign}
+                  customText={mediumText}
+                >
+                  <Icon>
+                    <FaPersonCirclePlus />
+                  </Icon>{" "}
+                  Follow
+                </Button>
+              ))}
         </>
       )}
     </Wrapper>
@@ -69,5 +100,9 @@ const Avatar = styled.img`
 `;
 
 const SubContainer = styled.div``;
+
+const Icon = styled.div`
+  margin-right: 1rem;
+`;
 
 export default UserProfile;
