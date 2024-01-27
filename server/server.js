@@ -9,6 +9,8 @@ const { getUserProfile } = require("./handlers/getUserProfile");
 const { getRecipes } = require("./handlers/getRecipes");
 const { deleteRecipe } = require("./handlers/deleteRecipe");
 const { getSpecificRecipe } = require("./handlers/getSpecificRecipe");
+const { followUser } = require("./handlers/followUser");
+const { unfollowUser } = require("./handlers/unfollowUser");
 
 const PORT = 4000;
 
@@ -31,6 +33,8 @@ express()
   .use("/", express.static(__dirname + "/"))
   .post("/api/add-recipe", addRecipe)
   .post("/api/users", addUser)
+  .post("/api/follow/:userId", followUser)
+  .post("/api/unfollow/:userId", unfollowUser)
   .get("/api/users/:userId", getUserProfile)
   .get("/api/all-recipes-by/:userId", getRecipes)
   .get("/api/all-recipes/:recipeId", getSpecificRecipe)

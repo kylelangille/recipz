@@ -2,15 +2,17 @@ import { styled } from "styled-components";
 import { useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/UserContext";
-import { FaPersonCirclePlus } from "react-icons/fa6";
+import { FaPersonCirclePlus, FaPersonCircleXmark } from "react-icons/fa6";
 import LoadingCircle from "./UI/LoadingCircle";
 import Button from "./UI/Button";
 
 const UserProfile = () => {
   const { userId } = useParams();
-  const { user: userFromContext } = useContext(UserContext);
+  const { user: userFromContext, updateUserContext } = useContext(UserContext);
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [loadingFollow, setLoadingFollow] = useState(false);
+  const [loadingUnfollow, setLoadingUnfollow] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -22,17 +24,105 @@ const UserProfile = () => {
       fetch(`/api/users/${userId}`)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data.data);
           setUserData(data.data);
           setLoading(false);
         });
     }
   }, [userId, userFromContext]);
 
+  const handleFollowUser = async () => {
+    try {
+      setLoadingFollow(true);
+      const response = await fetch(`/api/follow/${userId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          loggedInUserId: userFromContext.id,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to follow user");
+      }
+
+      const updatedUser = {
+        ...userFromContext,
+        following: [...userFromContext.following, userId],
+      };
+      updateUserContext(updatedUser);
+      setUserData({
+        ...userData,
+        followers: [...userData.followers, userFromContext.id],
+      });
+    } catch (err) {
+      console.error("Error following user: ", err);
+    } finally {
+      setLoadingFollow(false);
+    }
+  };
+
+  const handleUnfollowUser = async () => {
+    try {
+      setLoadingUnfollow(true);
+      const response = await fetch(`/api/unfollow/${userId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ loggedInUserId: userFromContext.id }),
+      });
+
+      if (!response.ok) {
+        throw new Error("failed to unfollow user");
+      }
+
+      const updatedUser = {
+        ...userFromContext,
+        following: userFromContext.following.filter((id) => id !== userId),
+      };
+      updateUserContext(updatedUser);
+      setUserData({
+        ...userData,
+        followers: userData.followers.filter((id) => id !== userFromContext.id),
+      });
+    } catch (err) {
+      console.error("Error unfollowing user: ", err);
+    } finally {
+      setLoadingUnfollow(false);
+    }
+  };
+
   const customDisplay = "flex";
   const customAlign = "center";
   const mediumText = "1.2rem";
 
+  const renderFollowButton =
+    userFromContext.id !== userId &&
+    (loadingFollow || loadingUnfollow ? (
+      <LoadingCircle />
+    ) : (
+      <Button
+        customDisplay={customDisplay}
+        customAlign={customAlign}
+        customText={mediumText}
+        onClick={
+          userFromContext.following?.includes(userId)
+            ? handleUnfollowUser
+            : handleFollowUser
+        }
+      >
+        <Icon>
+          {userFromContext.following?.includes(userId) ? (
+            <FaPersonCircleXmark />
+          ) : (
+            <FaPersonCirclePlus />
+          )}
+        </Icon>{" "}
+        {userFromContext.following?.includes(userId) ? "Unfollow" : "Follow"}
+      </Button>
+    ));
   return (
     <Wrapper>
       {loading ? (
@@ -60,20 +150,7 @@ const UserProfile = () => {
             </SubContainer>
           </HeadContainer>
           {userFromContext.id === userId && <Button>Edit Profile</Button>}
-          {!userFromContext.following ||
-            (!userFromContext.following.includes(userId) &&
-              userFromContext.id !== userId && (
-                <Button
-                  customDisplay={customDisplay}
-                  customAlign={customAlign}
-                  customText={mediumText}
-                >
-                  <Icon>
-                    <FaPersonCirclePlus />
-                  </Icon>{" "}
-                  Follow
-                </Button>
-              ))}
+          {renderFollowButton}
         </>
       )}
     </Wrapper>
