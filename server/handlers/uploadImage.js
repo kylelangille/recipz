@@ -11,8 +11,6 @@ AWS.config.update({
   region: "us-east-1",
 });
 
-const storage = multer.memoryStorage();
-
 const uploadImage = async (req, res) => {
   const s3 = new AWS.S3();
 
