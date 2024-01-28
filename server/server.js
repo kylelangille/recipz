@@ -2,6 +2,7 @@
 
 const express = require("express");
 const morgan = require("morgan");
+const multer = require("multer");
 
 const { addRecipe } = require("./handlers/addRecipe");
 const { addUser } = require("./handlers/AddUser");
@@ -11,6 +12,10 @@ const { deleteRecipe } = require("./handlers/deleteRecipe");
 const { getSpecificRecipe } = require("./handlers/getSpecificRecipe");
 const { followUser } = require("./handlers/followUser");
 const { unfollowUser } = require("./handlers/unfollowUser");
+const { uploadImage } = require("./handlers/uploadImage");
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 const PORT = 4000;
 
@@ -32,6 +37,7 @@ express()
   .use(express.urlencoded({ extended: false }))
   .use("/", express.static(__dirname + "/"))
   .post("/api/add-recipe", addRecipe)
+  .post("/api/upload-image", upload.single("image"), uploadImage)
   .post("/api/users", addUser)
   .post("/api/follow/:userId", followUser)
   .post("/api/unfollow/:userId", unfollowUser)

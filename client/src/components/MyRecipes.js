@@ -12,7 +12,6 @@ const MyRecipes = () => {
     fetch(`/api/all-recipes-by/${userId}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.data);
         setRecipes(data.data);
       });
   }, [userId]);
@@ -44,7 +43,7 @@ const MyRecipes = () => {
 };
 
 const Wrapper = styled.div`
-  margin: 5rem auto 0 auto;
+  margin: 5rem auto 0 300px;
 `;
 
 export default MyRecipes;
