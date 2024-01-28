@@ -1,24 +1,30 @@
 import { styled } from "styled-components";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import TagDisplay from "./recipe-display/TagDisplay";
 import LoadingCircle from "./UI/LoadingCircle";
 import noImage from "../assets/no-image.png";
+import Button from "./UI/Button";
 
 const RecipePage = () => {
   const { recipeId } = useParams();
   const { user: userFromContext } = useContext(UserContext);
   const [recipeData, setRecipeData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(false);
+  const [userId, setUserId] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
     fetch(`/api/all-recipes/${recipeId}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.data);
         setRecipeData(data.data);
+        setUserId(data.data.userId);
         setLoading(false);
       });
   }, []);
@@ -32,6 +38,38 @@ const RecipePage = () => {
       steps = [],
     } = {},
   } = recipeData;
+
+  const handleShowConfirmDelete = () => {
+    setShowConfirmDelete(true);
+  };
+
+  const handleDenyDelete = () => {
+    setShowConfirmDelete(false);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      setLoadingDelete(true);
+
+      await fetch("/api/delete-recipe", {
+        method: "DELETE",
+        body: JSON.stringify({
+          _id: recipeId,
+          userId,
+        }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+
+      navigate("/my-recipes");
+    } catch (err) {
+      console.error("Error: ", err);
+    } finally {
+      setLoadingDelete(false);
+    }
+  };
 
   const imageSrc = mealImg ? mealImg : noImage;
 
@@ -56,17 +94,17 @@ const RecipePage = () => {
           </HeadContainer>
           <DetailsContainer>
             <IngredientContainer>
-              <h4>Ingredients:</h4>
+              <Heading>Ingredients:</Heading>
               <ol>
                 {ingredients.map((ingredient, index) => (
                   <li key={index}>
-                    <span>{ingredient.measure}</span> {ingredient.ingredient}
+                    <span>{ingredient.measure}</span> of {ingredient.ingredient}
                   </li>
                 ))}
               </ol>
             </IngredientContainer>
             <StepsContainer>
-              <h4>Instructions:</h4>
+              <Heading>Instructions:</Heading>
               <ol>
                 {steps.map((step, index) => (
                   <li key={index}>{step}</li>
@@ -74,6 +112,31 @@ const RecipePage = () => {
               </ol>
             </StepsContainer>
           </DetailsContainer>
+          {userId === userFromContext.id && (
+            <ControlPanel>
+              {!showConfirmDelete && (
+                <DeleteButton type="button" onClick={handleShowConfirmDelete}>
+                  Delete Recipe
+                </DeleteButton>
+              )}
+              {showConfirmDelete && (
+                <div>
+                  <Confirm>Are you sure?</Confirm>
+                  <ConfirmControls>
+                    <Button
+                      onClick={handleConfirmDelete}
+                      disabled={loadingDelete}
+                    >
+                      {loadingDelete ? "Deleting recipe..." : "Yes"}
+                    </Button>
+                    <Button onClick={handleDenyDelete} disabled={loadingDelete}>
+                      No
+                    </Button>
+                  </ConfirmControls>
+                </div>
+              )}
+            </ControlPanel>
+          )}
         </>
       )}
     </Wrapper>
@@ -81,7 +144,7 @@ const RecipePage = () => {
 };
 
 const Wrapper = styled.div`
-  margin: 7rem auto 0 auto;
+  margin: 7rem auto 0 300px;
   max-width: 50rem;
 `;
 
@@ -110,6 +173,11 @@ const MealImg = styled.img`
   margin-right: 1rem;
 `;
 
+const Heading = styled.h4`
+  font-weight: bold;
+  font-size: 1.2rem;
+`;
+
 const DetailsContainer = styled.div`
   margin-left: 11rem;
 `;
@@ -119,5 +187,28 @@ const IngredientContainer = styled.div`
 `;
 
 const StepsContainer = styled.div``;
+
+const ControlPanel = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+`;
+
+const Confirm = styled.span`
+  margin-right: 1rem;
+`;
+
+const ConfirmControls = styled.div`
+  gap: 10px;
+  display: flex;
+`;
+
+const DeleteButton = styled.button`
+  border: 1px solid #000;
+  border-radius: 12px;
+  background-color: red;
+  font-weight: bold;
+  padding: 5px 10px;
+`;
 
 export default RecipePage;
