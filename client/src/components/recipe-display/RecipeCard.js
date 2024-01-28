@@ -51,19 +51,7 @@ const RecipeCard = ({
     }
   };
 
-  const decodeBase64Image = (base64String) => {
-    const decodedImage = atob(base64String);
-    const buffer = new ArrayBuffer(decodedImage.length);
-    const view = new Uint8Array(buffer);
-    for (let i = 0; i < decodedImage.length; i++) {
-      view[i] = decodedImage.charCodeAt(i);
-    }
-    const blob = new Blob([view], { type: "image/png" });
-    const imageUrl = URL.createObjectURL(blob);
-    return imageUrl;
-  };
-
-  const imageSrc = mealImg ? decodeBase64Image(mealImg) : noImage;
+  const imageSrc = mealImg ? mealImg : noImage;
 
   return (
     <Wrapper>
