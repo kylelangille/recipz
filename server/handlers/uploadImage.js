@@ -1,6 +1,5 @@
 "use strict";
 
-const multer = require("multer");
 require("dotenv").config();
 const { v4: uuidv4 } = require("uuid");
 const AWS = require("aws-sdk");
