@@ -12,43 +12,11 @@ const RecipeCard = ({
   noImage,
   tags,
   recipeId,
-  userId,
 }) => {
   const [showDetails, setShowDetails] = useState(false);
-  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const handleShowDetails = () => {
     setShowDetails(!showDetails);
-  };
-
-  const handleShowConfirmDelete = () => {
-    setShowConfirmDelete(true);
-  };
-
-  const handleDenyDelete = () => {
-    setShowConfirmDelete(false);
-  };
-
-  const handleConfirmDelete = async () => {
-    try {
-      setLoading(true);
-
-      await fetch("/api/delete-recipe", {
-        method: "DELETE",
-        body: JSON.stringify({ _id: recipeId, userId }),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
-
-      window.location.reload();
-    } catch (err) {
-      console.error("Error: ", err);
-    } finally {
-      setLoading(false);
-    }
   };
 
   const imageSrc = mealImg ? mealImg : noImage;
@@ -90,26 +58,6 @@ const RecipeCard = ({
               ))}
             </ol>
           </div>
-          <Controls>
-            {!showConfirmDelete && (
-              <button type="button" onClick={handleShowConfirmDelete}>
-                Delete Recipe
-              </button>
-            )}
-            {showConfirmDelete && (
-              <div>
-                <Confirm>Are you sure?</Confirm>
-                <ConfirmControls>
-                  <button onClick={handleConfirmDelete} disabled={loading}>
-                    {loading ? "Deleting recipe..." : "Yes"}
-                  </button>
-                  <button onClick={handleDenyDelete} disabled={loading}>
-                    No
-                  </button>
-                </ConfirmControls>
-              </div>
-            )}
-          </Controls>
         </>
       )}
     </Wrapper>
@@ -147,20 +95,5 @@ const DetailsControl = styled.div`
 `;
 
 const DetailsButton = styled.button``;
-
-const Controls = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 1rem auto 0 auto;
-`;
-
-const Confirm = styled.span`
-  margin-right: 1rem;
-`;
-
-const ConfirmControls = styled.div`
-  gap: 10px;
-  display: flex;
-`;
 
 export default RecipeCard;
