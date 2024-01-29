@@ -15,7 +15,7 @@ const Random = () => {
       .catch((err) => console.log(err));
   };
 
-  const bigText = "2rem";
+  const bigText = "1.2rem";
 
   return (
     <Wrapper>
@@ -36,7 +36,7 @@ const Random = () => {
 };
 
 const Wrapper = styled.div`
-  margin: 7rem auto 0 auto;
+  margin: 7rem auto 0 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
