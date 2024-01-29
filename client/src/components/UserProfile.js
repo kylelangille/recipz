@@ -75,7 +75,7 @@ const UserProfile = () => {
       });
 
       if (!response.ok) {
-        throw new Error("failed to unfollow user");
+        throw new Error("Failed to unfollow user");
       }
 
       const updatedUser = {
@@ -123,6 +123,7 @@ const UserProfile = () => {
         {userFromContext.following?.includes(userId) ? "Unfollow" : "Follow"}
       </Button>
     ));
+
   return (
     <Wrapper>
       {loading ? (

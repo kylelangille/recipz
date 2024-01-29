@@ -13,6 +13,8 @@ const { getSpecificRecipe } = require("./handlers/getSpecificRecipe");
 const { followUser } = require("./handlers/followUser");
 const { unfollowUser } = require("./handlers/unfollowUser");
 const { uploadImage } = require("./handlers/uploadImage");
+const { saveRecipe } = require("./handlers/saveRecipe");
+const { unsaveRecipe } = require("./handlers/unsaveRecipe");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -41,6 +43,8 @@ express()
   .post("/api/users", addUser)
   .post("/api/follow/:userId", followUser)
   .post("/api/unfollow/:userId", unfollowUser)
+  .post("/api/save-recipe/:recipeId", saveRecipe)
+  .post("/api/unsave-recipe/:recipeId", unsaveRecipe)
   .get("/api/users/:userId", getUserProfile)
   .get("/api/all-recipes-by/:userId", getRecipes)
   .get("/api/all-recipes/:recipeId", getSpecificRecipe)

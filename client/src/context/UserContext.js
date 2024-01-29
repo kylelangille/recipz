@@ -16,6 +16,7 @@ const UserProvider = ({ children }) => {
       recipe: userData.recipes,
       following: userData.following,
       followers: userData.followers,
+      savedRecipes: userData.savedRecipes,
     });
   }, []);
 
@@ -32,6 +33,7 @@ const UserProvider = ({ children }) => {
           recipes: newUser.recipes || [],
           following: newUser.following || [],
           followers: newUser.followers || [],
+          saveRecipes: newUser.savedRecipes || [],
         }),
       });
 
