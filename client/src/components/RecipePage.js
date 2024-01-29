@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import TagDisplay from "./recipe-display/TagDisplay";
@@ -9,12 +10,14 @@ import Button from "./UI/Button";
 
 const RecipePage = () => {
   const { recipeId } = useParams();
-  const { user: userFromContext } = useContext(UserContext);
+  const { user: userFromContext, updateUserContext } = useContext(UserContext);
   const [recipeData, setRecipeData] = useState({});
   const [loading, setLoading] = useState(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [loadingSave, setLoadingSave] = useState(false);
+  const [loadingUnsave, setLoadingUnsave] = useState(false);
 
   const navigate = useNavigate();
 
@@ -71,11 +74,67 @@ const RecipePage = () => {
     }
   };
 
+  const handleSaveRecipe = async () => {
+    try {
+      setLoadingSave(true);
+      const response = await fetch(`/api/save-recipe/${recipeId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: userFromContext.id }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save recipe");
+      }
+
+      const updatedUser = {
+        ...userFromContext,
+        savedRecipes: [...userFromContext.savedRecipes, recipeId],
+      };
+      updateUserContext(updatedUser);
+    } catch (err) {
+      console.error("Error save recipe: ", err);
+    } finally {
+      setLoadingSave(false);
+    }
+  };
+
+  const handleUnsaveRecipe = async () => {
+    try {
+      setLoadingUnsave(true);
+      const response = await fetch(`/api/unsave-recipe/${recipeId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: userFromContext.id }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to unsave recipe");
+      }
+
+      const updatedUser = {
+        ...userFromContext,
+        savedRecipes: userFromContext.savedRecipes.filter(
+          (id) => id !== recipeId
+        ),
+      };
+      updateUserContext(updatedUser);
+    } catch (err) {
+      console.error("Error unsaving recipe: ", err);
+    } finally {
+      setLoadingUnsave(false);
+    }
+  };
+
   const imageSrc = mealImg ? mealImg : noImage;
 
   return (
     <Wrapper>
-      {loading ? (
+      {loading || loadingSave || loadingUnsave ? (
         <LoadingCircle />
       ) : (
         <>
@@ -91,6 +150,25 @@ const RecipePage = () => {
               </p>
               <TagDisplay tags={tags} />
             </SubContainer>
+            {userFromContext.id !== userId && (
+              <SaveRecipeContainer>
+                {userFromContext.savedRecipes?.includes(recipeId) ? (
+                  <SaveSubContainer onClick={handleUnsaveRecipe}>
+                    <Icon>
+                      <FaHeart />
+                    </Icon>
+                    <p>Unsave</p>
+                  </SaveSubContainer>
+                ) : (
+                  <SaveSubContainer onClick={handleSaveRecipe}>
+                    <Icon>
+                      <FaRegHeart />
+                    </Icon>
+                    <p>Save this recipe</p>
+                  </SaveSubContainer>
+                )}
+              </SaveRecipeContainer>
+            )}
           </HeadContainer>
           <DetailsContainer>
             <IngredientContainer>
@@ -120,7 +198,7 @@ const RecipePage = () => {
                 </DeleteButton>
               )}
               {showConfirmDelete && (
-                <div>
+                <>
                   <Confirm>Are you sure?</Confirm>
                   <ConfirmControls>
                     <Button
@@ -133,7 +211,7 @@ const RecipePage = () => {
                       No
                     </Button>
                   </ConfirmControls>
-                </div>
+                </>
               )}
             </ControlPanel>
           )}
@@ -151,6 +229,7 @@ const Wrapper = styled.div`
 const HeadContainer = styled.div`
   display: flex;
   align-items: center;
+  z-index: -10;
 `;
 
 const SubContainer = styled.div`
@@ -171,10 +250,41 @@ const MealImg = styled.img`
   max-width: 10rem;
   max-height: 10rem;
   margin-right: 1rem;
+  border-radius: 12px;
+  box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.5);
 `;
 
 const Heading = styled.h4`
   font-weight: bold;
+  font-size: 1.2rem;
+`;
+
+const SaveRecipeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: absolute;
+  right: 20%;
+`;
+
+const SaveSubContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 10px;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background: #999;
+  }
+`;
+
+const Icon = styled.div`
+  margin-bottom: 10px;
+  color: var(--button);
   font-size: 1.2rem;
 `;
 
@@ -206,9 +316,15 @@ const ConfirmControls = styled.div`
 const DeleteButton = styled.button`
   border: 1px solid #000;
   border-radius: 12px;
-  background-color: red;
+  background-color: var(--remove);
   font-weight: bold;
   padding: 5px 10px;
+  transition: 0.3s all ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    background: #ab3337;
+  }
 `;
 
 export default RecipePage;

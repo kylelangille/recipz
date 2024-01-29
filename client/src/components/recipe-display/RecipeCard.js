@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import TagDisplay from "./TagDisplay";
+import Button from "../UI/Button";
 
 const RecipeCard = ({
   mealImg,
@@ -34,13 +35,13 @@ const RecipeCard = ({
         </div>
       </MainContainer>
       <DetailsControl>
-        <DetailsButton onClick={handleShowDetails}>
+        <Button onClick={handleShowDetails}>
           {showDetails ? "Hide" : "Show"} details
-        </DetailsButton>
+        </Button>
       </DetailsControl>
       {showDetails && (
         <>
-          <div>
+          <DetailsContainer>
             <p>Ingredients:</p>
             <ol>
               {ingredients.map((ingredient, index) => (
@@ -49,15 +50,15 @@ const RecipeCard = ({
                 </li>
               ))}
             </ol>
-          </div>
-          <div>
+          </DetailsContainer>
+          <DetailsContainer>
             <p>Instructions:</p>
             <ol>
               {steps.map((step, index) => (
                 <li key={index}>{step}</li>
               ))}
             </ol>
-          </div>
+          </DetailsContainer>
         </>
       )}
     </Wrapper>
@@ -65,10 +66,11 @@ const RecipeCard = ({
 };
 
 const Wrapper = styled.div`
-  border: 1px solid #000;
+  border: 1px solid var(--stroke);
   border-radius: 12px;
   margin: 1rem auto 0 auto;
   max-width: 50rem;
+  box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.5);
 `;
 
 const StyledLink = styled(Link)`
@@ -94,6 +96,13 @@ const DetailsControl = styled.div`
   justify-content: center;
 `;
 
-const DetailsButton = styled.button``;
+const DetailsContainer = styled.div`
+  margin: 1rem 1rem;
+
+  p {
+    font-size: 1.2rem;
+    text-decoration: underline;
+  }
+`;
 
 export default RecipeCard;

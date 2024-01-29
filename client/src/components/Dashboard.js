@@ -102,7 +102,7 @@ const Navigation = styled.nav`
   height: 100vh;
   overflow-y: auto;
   padding-top: 30px;
-  z-index: -1;
+  z-index: 10;
 `;
 
 const Img = styled.img`
@@ -131,9 +131,10 @@ const StyledNavLink = styled(NavLink)`
   display: flex;
   align-items: center;
   font-size: 1.2rem;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-right: 2rem;
   color: var(--heading);
+  padding: 5px;
 
   &:hover {
     color: lightgray;
@@ -142,7 +143,6 @@ const StyledNavLink = styled(NavLink)`
   &.active {
     background: #999;
     border-radius: 6px;
-    padding: 5px;
     color: var(--background);
   }
 `;
