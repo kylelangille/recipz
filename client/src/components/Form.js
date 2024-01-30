@@ -33,11 +33,20 @@ const Form = () => {
   const [recipeSubmitted, setRecipeSubmitted] = useState(false);
 
   const TAG_OPTIONS = [
+    "Breakfast",
+    "Lunch",
+    "Dinner",
+    "Dessert",
     "Vegan",
     "Vegetarian",
     "Gluten-Free",
-    "Breakfast",
-    "Dessert",
+    "Peanut-Free",
+    "Shellfish-Free",
+    "One-Pot",
+    "Air-Fryer",
+    "Keto",
+    "High-Protein",
+    "Date-Night",
   ];
 
   const handleInputChange = (ev) => {
