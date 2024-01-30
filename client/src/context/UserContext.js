@@ -11,6 +11,7 @@ const UserProvider = ({ children }) => {
     setUser({
       email: userData.email,
       name: userData.name,
+      location: userData.location,
       picture: userData.picture,
       id: userData.id,
       recipe: userData.recipes,
@@ -28,6 +29,7 @@ const UserProvider = ({ children }) => {
         body: JSON.stringify({
           email: newUser.email,
           name: newUser.name,
+          location: newUser.location || "",
           picture: newUser.picture || "",
           id: newUser.sub,
           recipes: newUser.recipes || [],

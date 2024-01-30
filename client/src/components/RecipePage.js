@@ -7,6 +7,7 @@ import TagDisplay from "./recipe-display/TagDisplay";
 import LoadingCircle from "./UI/LoadingCircle";
 import noImage from "../assets/no-image.png";
 import Button from "./UI/Button";
+import DeleteButton from "./UI/DeleteButton";
 
 const RecipePage = () => {
   const { recipeId } = useParams();
@@ -311,20 +312,6 @@ const Confirm = styled.span`
 const ConfirmControls = styled.div`
   gap: 10px;
   display: flex;
-`;
-
-const DeleteButton = styled.button`
-  border: 1px solid var(--stroke);
-  border-radius: 12px;
-  background-color: var(--remove);
-  font-weight: bold;
-  padding: 5px 10px;
-  transition: 0.3s all ease-in-out;
-  cursor: pointer;
-
-  &:hover {
-    background: #ab3337;
-  }
 `;
 
 export default RecipePage;

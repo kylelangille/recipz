@@ -38,7 +38,7 @@ const addUser = async (req, res) => {
     console.error("Error: ", err);
     res
       .status(500)
-      .json({ status: 500, message: "failed to add user", data: null });
+      .json({ status: 500, message: "Failed to add user", data: null });
   } finally {
     client.close();
   }

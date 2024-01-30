@@ -5,6 +5,7 @@ import { UserContext } from "../context/UserContext";
 import { FaPersonCirclePlus, FaPersonCircleXmark } from "react-icons/fa6";
 import LoadingCircle from "./UI/LoadingCircle";
 import Button from "./UI/Button";
+import EditProfileForm from "./EditProfileForm";
 
 const UserProfile = () => {
   const { userId } = useParams();
@@ -13,6 +14,8 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(false);
   const [loadingFollow, setLoadingFollow] = useState(false);
   const [loadingUnfollow, setLoadingUnfollow] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [loadingUpdate, setLoadingUpdate] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -94,6 +97,44 @@ const UserProfile = () => {
     }
   };
 
+  const handleEditProfile = () => {
+    setEditing(true);
+  };
+
+  const handleSaveProfile = async (updatedData) => {
+    try {
+      setLoadingUpdate(true);
+      const response = await fetch(`/api/edit-profile/${userId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update user profile");
+      }
+
+      const updatedUser = {
+        ...userFromContext,
+        ...updatedData,
+      };
+
+      updateUserContext(updatedUser);
+      setUserData(updatedUser);
+      setEditing(false);
+    } catch (err) {
+      console.error("Error saving profile changes: ", err);
+    } finally {
+      setLoadingUpdate(false);
+    }
+  };
+
+  const handleCancel = () => {
+    setEditing(false);
+  };
+
   const customDisplay = "flex";
   const customAlign = "center";
   const mediumText = "1.2rem";
@@ -119,42 +160,61 @@ const UserProfile = () => {
           ) : (
             <FaPersonCirclePlus />
           )}
-        </Icon>{" "}
+        </Icon>
         {userFromContext.following?.includes(userId) ? "Unfollow" : "Follow"}
       </Button>
     ));
 
   return (
-    <Wrapper>
-      {loading ? (
+    <>
+      {loadingUpdate ? (
         <LoadingCircle />
       ) : (
         <>
-          <HeadContainer>
-            <Avatar
-              src={userData.picture}
-              alt={`Picture of ${userData.name}`}
+          {editing ? (
+            <EditProfileForm
+              user={userData}
+              onSave={handleSaveProfile}
+              onCancel={handleCancel}
             />
-            <SubContainer>
-              <h2>{userData.name}</h2>
-              <p>
-                <span>
-                  Following:{" "}
-                  {userData.following ? userData.following.length : 0}
-                </span>{" "}
-                /{" "}
-                <span>
-                  Followers:{" "}
-                  {userData.followers ? userData.followers.length : 0}
-                </span>
-              </p>
-            </SubContainer>
-          </HeadContainer>
-          {userFromContext.id === userId && <Button>Edit Profile</Button>}
-          {renderFollowButton}
+          ) : (
+            <Wrapper>
+              {loading ? (
+                <LoadingCircle />
+              ) : (
+                <>
+                  <HeadContainer>
+                    <Avatar
+                      src={userData.picture}
+                      alt={`Picture of ${userData.name}`}
+                    />
+                    <SubContainer>
+                      <h2>{userData.name}</h2>
+                      <p>
+                        <span>
+                          Following:{" "}
+                          {userData.following ? userData.following.length : 0}
+                        </span>{" "}
+                        /{" "}
+                        <span>
+                          Followers:{" "}
+                          {userData.followers ? userData.followers.length : 0}
+                        </span>
+                      </p>
+                      <p>{userData.location}</p>
+                    </SubContainer>
+                  </HeadContainer>
+                  {userFromContext.id === userId && (
+                    <Button onClick={handleEditProfile}>Edit Profile</Button>
+                  )}
+                  {renderFollowButton}
+                </>
+              )}
+            </Wrapper>
+          )}
         </>
       )}
-    </Wrapper>
+    </>
   );
 };
 

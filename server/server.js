@@ -5,7 +5,7 @@ const morgan = require("morgan");
 const multer = require("multer");
 
 const { addRecipe } = require("./handlers/addRecipe");
-const { addUser } = require("./handlers/AddUser");
+const { addUser } = require("./handlers/addUser");
 const { getUserProfile } = require("./handlers/getUserProfile");
 const { getRecipes } = require("./handlers/getRecipes");
 const { deleteRecipe } = require("./handlers/deleteRecipe");
@@ -15,6 +15,7 @@ const { unfollowUser } = require("./handlers/unfollowUser");
 const { uploadImage } = require("./handlers/uploadImage");
 const { saveRecipe } = require("./handlers/saveRecipe");
 const { unsaveRecipe } = require("./handlers/unsaveRecipe");
+const { editProfile } = require("./handlers/editProfile");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -49,6 +50,7 @@ express()
   .get("/api/all-recipes-by/:userId", getRecipes)
   .get("/api/all-recipes/:recipeId", getSpecificRecipe)
   .delete("/api/delete-recipe", deleteRecipe)
+  .put("/api/edit-profile/:userId", editProfile)
   //
   .listen(PORT, () => {
     console.info(`Listening on port ${PORT}`);
