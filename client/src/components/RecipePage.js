@@ -314,7 +314,7 @@ const ConfirmControls = styled.div`
 `;
 
 const DeleteButton = styled.button`
-  border: 1px solid #000;
+  border: 1px solid var(--stroke);
   border-radius: 12px;
   background-color: var(--remove);
   font-weight: bold;

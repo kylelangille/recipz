@@ -83,7 +83,7 @@ const SaveContainer = styled.div`
 
   &:hover {
     background: #999;
-    color: #000;
+    color: var(--stroke);
   }
 `;
 
