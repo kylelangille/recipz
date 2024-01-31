@@ -8,6 +8,7 @@ import LoadingCircle from "./UI/LoadingCircle";
 import noImage from "../assets/no-image.png";
 import Button from "./UI/Button";
 import DeleteButton from "./UI/DeleteButton";
+import EditRecipeForm from "./EditRecipeForm";
 
 const RecipePage = () => {
   const { recipeId } = useParams();
@@ -19,6 +20,7 @@ const RecipePage = () => {
   const [userId, setUserId] = useState(null);
   const [loadingSave, setLoadingSave] = useState(false);
   const [loadingUnsave, setLoadingUnsave] = useState(false);
+  const [editing, setEditing] = useState(false);
 
   const navigate = useNavigate();
 
@@ -131,6 +133,29 @@ const RecipePage = () => {
     }
   };
 
+  const handleEditRecipe = () => {
+    setEditing(true);
+  };
+
+  const handleEditComplete = async () => {
+    try {
+      setEditing(false);
+
+      await fetch(`/api/all-recipes/${recipeId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setRecipeData(data.data);
+          setUserId(data.data.userId);
+        });
+    } catch (err) {
+      console.error("Error saving changes: ", err);
+    }
+  };
+
+  const handleCancelUpdate = () => {
+    setEditing(false);
+  };
+
   const imageSrc = mealImg ? mealImg : noImage;
 
   return (
@@ -139,82 +164,105 @@ const RecipePage = () => {
         <LoadingCircle />
       ) : (
         <>
-          <HeadContainer>
-            <MealImg src={imageSrc} />
-            <SubContainer>
-              <Title>{recipeName}</Title>
-              <p>
-                Created by:{" "}
-                <StyledLink to={`/users/${recipeData.userId}`}>
-                  {recipeData.createdBy}
-                </StyledLink>
-              </p>
-              <TagDisplay tags={tags} />
-            </SubContainer>
-            {userFromContext.id !== userId && (
-              <SaveRecipeContainer>
-                {userFromContext.savedRecipes?.includes(recipeId) ? (
-                  <SaveSubContainer onClick={handleUnsaveRecipe}>
-                    <Icon>
-                      <FaHeart />
-                    </Icon>
-                    <p>Unsave</p>
-                  </SaveSubContainer>
-                ) : (
-                  <SaveSubContainer onClick={handleSaveRecipe}>
-                    <Icon>
-                      <FaRegHeart />
-                    </Icon>
-                    <p>Save this recipe</p>
-                  </SaveSubContainer>
+          {editing ? (
+            <EditRecipeForm
+              recipeId={recipeId}
+              onEditComplete={handleEditComplete}
+              onCancel={handleCancelUpdate}
+              recipeData={recipeData}
+            />
+          ) : (
+            <>
+              <HeadContainer>
+                <MealImg src={imageSrc} />
+                <SubContainer>
+                  <Title>{recipeName}</Title>
+                  <p>
+                    Created by:{" "}
+                    <StyledLink to={`/users/${recipeData.userId}`}>
+                      {recipeData.createdBy}
+                    </StyledLink>
+                  </p>
+                  <TagDisplay tags={tags} />
+                </SubContainer>
+                {userFromContext.id !== userId && (
+                  <SaveRecipeContainer>
+                    {userFromContext.savedRecipes?.includes(recipeId) ? (
+                      <SaveSubContainer onClick={handleUnsaveRecipe}>
+                        <Icon>
+                          <FaHeart />
+                        </Icon>
+                        <p>Unsave</p>
+                      </SaveSubContainer>
+                    ) : (
+                      <SaveSubContainer onClick={handleSaveRecipe}>
+                        <Icon>
+                          <FaRegHeart />
+                        </Icon>
+                        <p>Save this recipe</p>
+                      </SaveSubContainer>
+                    )}
+                  </SaveRecipeContainer>
                 )}
-              </SaveRecipeContainer>
-            )}
-          </HeadContainer>
-          <DetailsContainer>
-            <IngredientContainer>
-              <Heading>Ingredients:</Heading>
-              <ol>
-                {ingredients.map((ingredient, index) => (
-                  <li key={index}>
-                    <span>{ingredient.measure}</span> of {ingredient.ingredient}
-                  </li>
-                ))}
-              </ol>
-            </IngredientContainer>
-            <StepsContainer>
-              <Heading>Instructions:</Heading>
-              <ol>
-                {steps.map((step, index) => (
-                  <li key={index}>{step}</li>
-                ))}
-              </ol>
-            </StepsContainer>
-          </DetailsContainer>
-          {userId === userFromContext.id && (
-            <ControlPanel>
-              {!showConfirmDelete && (
-                <DeleteButton type="button" onClick={handleShowConfirmDelete}>
-                  Delete Recipe
-                </DeleteButton>
-              )}
-              {showConfirmDelete && (
-                <>
-                  <Confirm>Are you sure?</Confirm>
-                  <ConfirmControls>
-                    <Button
-                      onClick={handleConfirmDelete}
-                      disabled={loadingDelete}
+              </HeadContainer>
+              <DetailsContainer>
+                <IngredientContainer>
+                  <Heading>Ingredients:</Heading>
+                  <ol>
+                    {ingredients.map((ingredient, index) => (
+                      <li key={index}>
+                        <span>{ingredient.measure}</span> of{" "}
+                        {ingredient.ingredient}
+                      </li>
+                    ))}
+                  </ol>
+                </IngredientContainer>
+                <StepsContainer>
+                  <Heading>Instructions:</Heading>
+                  <ol>
+                    {steps.map((step, index) => (
+                      <li key={index}>{step}</li>
+                    ))}
+                  </ol>
+                </StepsContainer>
+              </DetailsContainer>
+              {userId === userFromContext.id && (
+                <ControlPanel>
+                  {!showConfirmDelete && (
+                    <Button type="button" onClick={handleEditRecipe}>
+                      Edit Recipe
+                    </Button>
+                  )}
+                  {!showConfirmDelete && (
+                    <DeleteButton
+                      type="button"
+                      onClick={handleShowConfirmDelete}
                     >
-                      {loadingDelete ? "Deleting recipe..." : "Yes"}
-                    </Button>
-                    <Button onClick={handleDenyDelete} disabled={loadingDelete}>
-                      No
-                    </Button>
-                  </ConfirmControls>
-                </>
+                      Delete Recipe
+                    </DeleteButton>
+                  )}
+                  {showConfirmDelete && (
+                    <>
+                      <Confirm>Are you sure?</Confirm>
+                      <ConfirmControls>
+                        <Button
+                          onClick={handleConfirmDelete}
+                          disabled={loadingDelete}
+                        >
+                          {loadingDelete ? "Deleting recipe..." : "Yes"}
+                        </Button>
+                        <Button
+                          onClick={handleDenyDelete}
+                          disabled={loadingDelete}
+                        >
+                          No
+                        </Button>
+                      </ConfirmControls>
+                    </>
+                  )}
+                </ControlPanel>
               )}
-            </ControlPanel>
+            </>
           )}
         </>
       )}
@@ -303,6 +351,7 @@ const ControlPanel = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 4rem;
+  gap: 10px;
 `;
 
 const Confirm = styled.span`
