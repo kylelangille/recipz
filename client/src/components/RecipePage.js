@@ -69,7 +69,7 @@ const RecipePage = () => {
         },
       });
 
-      navigate("/my-recipes");
+      navigate(`/my-recipes/${userFromContext.id}`);
     } catch (err) {
       console.error("Error: ", err);
     } finally {
