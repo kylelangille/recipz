@@ -8,6 +8,7 @@ import RemoveButton from "./UI/RemoveButton";
 import Input from "./UI/Input";
 import TagInput from "./UI/TagInput";
 import LoadingCircle from "./UI/LoadingCircle";
+import TAG_OPTIONS from "../utils/tagOptions";
 
 import { handleInputChangeHelper } from "../form-helpers/handleInputChangeHelper";
 import { handleImgChangeHelper } from "../form-helpers/handleImgChangeHelper";
@@ -24,30 +25,13 @@ const Form = () => {
   const { isAuthenticated } = useAuth0();
   const [formData, setFormData] = useState({
     recipeName: "",
-    mealImg: null,
+    mealImg: "",
     ingredients: [],
     steps: [],
     tags: [],
   });
   const [loading, setLoading] = useState(false);
   const [recipeSubmitted, setRecipeSubmitted] = useState(false);
-
-  const TAG_OPTIONS = [
-    "Breakfast",
-    "Lunch",
-    "Dinner",
-    "Dessert",
-    "Vegan",
-    "Vegetarian",
-    "Gluten-Free",
-    "Peanut-Free",
-    "Shellfish-Free",
-    "One-Pot",
-    "Air-Fryer",
-    "Keto",
-    "High-Protein",
-    "Date-Night",
-  ];
 
   const handleInputChange = (ev) => {
     handleInputChangeHelper(ev, setFormData);
