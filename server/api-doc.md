@@ -12,6 +12,7 @@
 | `POST`   | `/api/upload-image`            | Uploads a recipe image to an S3 bucket                              |
 | `POST`   | `/api/save-recipe/:recipeId`   | Saves a recipe to user's profile based on provided recipeId         |
 | `POST`   | `/api/unsave-recipe/:recipeId` | Unsaves a recipe from a user's profile based on provided recipeId   |
+| `POST`   | `/api/save-random-recipe`      | Saves a random recipe to recipes collection                         |
 | `DELETE` | `/api/delete-recipe`           | Removes a recipe from a user's collection                           |
 | `PUT`    | `/api/edit-profile/:userId`    | Edits a user's profile based on provided userId                     |
 | `PUT`    | `/api/edit-recipe/:recipeId`   | Edits a recipe based on provided recipeId                           |

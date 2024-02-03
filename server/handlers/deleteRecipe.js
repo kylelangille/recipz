@@ -27,7 +27,7 @@ const deleteRecipe = async (req, res) => {
 
     await usersCollection.updateOne(
       { id: userId },
-      { $pull: { recipes: recipeId } }
+      { $pull: { recipes: recipeId, savedRecipes: recipeId } }
     );
 
     res.status(200).json({
