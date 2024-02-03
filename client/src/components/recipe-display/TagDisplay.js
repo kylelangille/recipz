@@ -22,7 +22,7 @@ const TagDisplay = ({ tags }) => {
       case "shellfish-free":
         return "#0B7189";
       case "one-pot":
-        return "#D6EEFF";
+        return "#6b7780";
       case "air-fryer":
         return "#AAADC4";
       case "keto":
@@ -58,6 +58,7 @@ const Tag = styled.span`
   background: ${(props) => props.backgroundcolor || "lightgray"};
   border-radius: 9px;
   font-weight: bold;
+  text-shadow: 1px 1px 1px var(--stroke);
 `;
 
 export default TagDisplay;

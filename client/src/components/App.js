@@ -38,7 +38,7 @@ const App = () => {
               <Routes>
                 <Route path="/users/:userId" element={<UserProfile />} />
                 <Route path="/add-recipe" element={<Form />} />
-                <Route path="/feed" element={<Feed />} />
+                <Route path="/feed/:userId" element={<Feed />} />
                 <Route path="/my-recipes/:userId" element={<MyRecipes />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/random" element={<Random />} />
