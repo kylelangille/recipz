@@ -43,7 +43,10 @@ const Dashboard = () => {
           </StyledNavLink>
         </ListItem>
         <ListItem>
-          <StyledNavLink to="/feed" activeclassname="active">
+          <StyledNavLink
+            to={`/feed/${userFromContext.id}`}
+            activeclassname="active"
+          >
             <Icon>
               <FaNewspaper />
             </Icon>
