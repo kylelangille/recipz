@@ -15,6 +15,8 @@ const Button = ({ children, ...props }) => {
         display: customDisplay,
         alignItems: customAlign,
       }}
+      type={props.type}
+      disabled={props.disabled}
     >
       {children}
     </Wrapper>
