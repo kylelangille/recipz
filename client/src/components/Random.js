@@ -6,13 +6,13 @@ import Button from "./UI/Button";
 
 const Random = () => {
   const { isAuthenticated } = useAuth0();
-  const [mealList, setMealList] = useState([]);
+  const [randomRecipe, setRandomRecipe] = useState([]);
 
   const getMeal = () => {
     fetch(`https://www.themealdb.com/api/json/v1/1/random.php`)
       .then((res) => res.json())
-      .then((data) => setMealList(data["meals"]))
-      .catch((err) => console.log(err));
+      .then((data) => setRandomRecipe(data["meals"]))
+      .catch((err) => console.err(err));
   };
 
   const bigText = "1.2rem";
@@ -24,7 +24,7 @@ const Random = () => {
           <Button onClick={getMeal} customText={bigText}>
             Generate Recipe
           </Button>
-          {mealList.map((meal) => (
+          {randomRecipe.map((meal) => (
             <RandomRecipeCard key={meal.idMeal} meal={meal} />
           ))}
         </>

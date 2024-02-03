@@ -17,6 +17,7 @@ const { saveRecipe } = require("./handlers/saveRecipe");
 const { unsaveRecipe } = require("./handlers/unsaveRecipe");
 const { editProfile } = require("./handlers/editProfile");
 const { editRecipe } = require("./handlers/editRecipe");
+const { saveRandomRecipe } = require("./handlers/saveRandomRecipe");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -47,6 +48,7 @@ express()
   .post("/api/unfollow/:userId", unfollowUser)
   .post("/api/save-recipe/:recipeId", saveRecipe)
   .post("/api/unsave-recipe/:recipeId", unsaveRecipe)
+  .post("/api/save-random-recipe", saveRandomRecipe)
   .get("/api/users/:userId", getUserProfile)
   .get("/api/all-recipes-by/:userId", getRecipes)
   .get("/api/all-recipes/:recipeId", getSpecificRecipe)

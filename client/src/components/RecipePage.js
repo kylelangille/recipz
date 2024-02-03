@@ -350,7 +350,7 @@ const StepsContainer = styled.div``;
 const ControlPanel = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 4rem;
+  margin: 4rem 0 2rem 0;
   gap: 10px;
 `;
 
