@@ -39,9 +39,7 @@ const Landing = () => {
       {isAuthenticated ? (
         <>
           {userFromContext && userFromContext.name ? (
-            <>
-              <Dashboard />
-            </>
+            <Dashboard />
           ) : (
             <LoadingCircle />
           )}
