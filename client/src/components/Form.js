@@ -101,7 +101,7 @@ const Form = () => {
     }
   };
 
-  const bigText = "2rem";
+  const bigText = "1.6rem";
 
   return (
     <Wrapper>
