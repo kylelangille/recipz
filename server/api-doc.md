@@ -7,6 +7,8 @@
 | `GET`    | `/api/all-recipes/:recipeId`   | Retrives specific recipe data based on provided recipeId                     |
 | `GET`    | `/api/feed/:userId`            | Retrieves an array of recipes that compile into a userFeed based on userId   |
 | `GET`    | `/api/search?q=:query`         | Retrieves an array of items from the database based on provided search query |
+| `GET`    | `/api/get-followers/:userId`   | Retrieves list of all users followers by a user provided by userId           |
+| `GET`    | `/api/get-following/:userId`   | Retrieves list of all users followed by a user provided by userId            |
 | `POST`   | `/api/add-recipe`              | Adds a recipe to the logged-in user's collection                             |
 | `POST`   | `/api/follow/:userId`          | Follows user based on provided UserId                                        |
 | `POST`   | `/api/unfollow/:userId`        | Unfollows user based on UserId                                               |
