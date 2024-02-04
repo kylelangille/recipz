@@ -19,6 +19,7 @@ const { editProfile } = require("./handlers/editProfile");
 const { editRecipe } = require("./handlers/editRecipe");
 const { saveRandomRecipe } = require("./handlers/saveRandomRecipe");
 const { getUserFeed } = require("./handlers/getUserFeed");
+const { getSearch } = require("./handlers/getSearch");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -54,6 +55,7 @@ express()
   .get("/api/all-recipes-by/:userId", getRecipes)
   .get("/api/all-recipes/:recipeId", getSpecificRecipe)
   .get("/api/feed/:userId", getUserFeed)
+  .get("/api/search", getSearch)
   .delete("/api/delete-recipe", deleteRecipe)
   .put("/api/edit-profile/:userId", editProfile)
   .put("/api/edit-recipe/:recipeId", editRecipe)

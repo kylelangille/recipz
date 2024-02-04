@@ -11,6 +11,20 @@ const TagDisplay = ({ tags }) => {
         return "#F34213";
       case "dessert":
         return "#632B30";
+      case "chicken":
+        return "#CC5803";
+      case "beef":
+        return "#5B2E48";
+      case "seafood":
+        return "#1f363d";
+      case "pork":
+        return "#585563";
+      case "lamb":
+        return "#5BC0EB";
+      case "goat":
+        return "#8D6A9F";
+      case "pasta":
+        return "#EF798A";
       case "vegan":
         return "#9ebd6e";
       case "vegetarian":
@@ -21,6 +35,10 @@ const TagDisplay = ({ tags }) => {
         return "#E6AF2E";
       case "shellfish-free":
         return "#0B7189";
+      case "side":
+        return "#52FFB8";
+      case "starter":
+        return "#FFBFA0";
       case "one-pot":
         return "#6b7780";
       case "air-fryer":
@@ -51,6 +69,7 @@ const Wrapper = styled.div`
   margin-top: 5px;
   gap: 5px;
   display: flex;
+  flex-wrap: wrap;
 `;
 
 const Tag = styled.span`

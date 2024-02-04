@@ -211,7 +211,7 @@ const RecipePage = () => {
                   <ol>
                     {ingredients.map((ingredient, index) => (
                       <li key={index}>
-                        <span>{ingredient.measure}</span> of{" "}
+                        <span>{ingredient.measure}</span>{" "}
                         {ingredient.ingredient}
                       </li>
                     ))}
@@ -291,7 +291,7 @@ const Title = styled.h2`
 `;
 
 const StyledLink = styled(Link)`
-  color: var(--heading);
+  color: var(--main);
   text-decoration: none;
 `;
 
@@ -325,9 +325,10 @@ const SaveSubContainer = styled.div`
   border-radius: 12px;
   padding: 10px;
   transition: all 0.3s ease-in-out;
+  margin-bottom: 2rem;
 
   &:hover {
-    background: #999;
+    background: var(--secondary);
   }
 `;
 

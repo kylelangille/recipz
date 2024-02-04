@@ -8,7 +8,7 @@ const LoadingCircle = () => {
   return (
     <Svg width={100} height={100}>
       <Circle
-        stroke="var(--highlight)"
+        stroke="var(--button)"
         strokeWidth={10}
         fill="transparent"
         r={radius}
