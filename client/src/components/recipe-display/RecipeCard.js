@@ -75,7 +75,7 @@ const Wrapper = styled.div`
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: var(--heading);
+  color: var(--main);
 `;
 
 const Img = styled.img`

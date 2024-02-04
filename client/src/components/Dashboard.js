@@ -136,7 +136,7 @@ const StyledNavLink = styled(NavLink)`
   font-size: 1.2rem;
   margin-bottom: 10px;
   margin-right: 2rem;
-  color: var(--heading);
+  color: var(--main);
   padding: 5px;
 
   &:hover {
@@ -153,7 +153,7 @@ const StyledNavLink = styled(NavLink)`
 const LogOutButton = styled.button`
   display: flex;
   align-items: center;
-  color: var(--heading);
+  color: var(--main);
   background: var(--background);
   border: none;
   font-size: 1.2rem;
@@ -161,7 +161,7 @@ const LogOutButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    color: #a51c30;
+    color: var(--remove);
   }
 `;
 

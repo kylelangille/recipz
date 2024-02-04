@@ -25,7 +25,7 @@ const Button = ({ children, ...props }) => {
 
 const Wrapper = styled.button`
   background: var(--button);
-  color: var(--button-text);
+  color: var(--main);
   transition: 0.3s all ease-in-out;
   padding: 10px 20px;
   border: 1px solid #555;
