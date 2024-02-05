@@ -9,6 +9,7 @@ const FollowersPage = () => {
   const { userId } = useParams();
   const { user: userFromContext } = useContext(UserContext);
   const [followers, setFollowers] = useState(null);
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,7 +25,21 @@ const FollowersPage = () => {
       }
     };
 
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(`/api/users/${userId}`);
+        const userData = await response.json();
+
+        if (userData.data) {
+          setUser(userData.data);
+        }
+      } catch (err) {
+        console.error("Error: ", err);
+      }
+    };
+
     fetchData();
+    fetchUserData();
   }, [userId]);
 
   return (
@@ -34,9 +49,20 @@ const FollowersPage = () => {
       ) : (
         <>
           {followers.length === 0 ? (
-            <p>You don't have any followers 😔</p>
+            <>
+              {userId !== userFromContext.id && (
+                <Heading>{user.name}'s Followers:</Heading>
+              )}
+              <p>You don't have any followers 😔</p>
+            </>
           ) : (
             <>
+              {userId === userFromContext.id && (
+                <Heading>My followers: </Heading>
+              )}
+              {userId !== userFromContext.id && (
+                <Heading>{user.name}'s Followers:</Heading>
+              )}
               {followers.map((follower) => (
                 <UserCard
                   key={follower._id}
@@ -56,6 +82,10 @@ const FollowersPage = () => {
 
 const Wrapper = styled.div`
   margin: 5rem auto 0 300px;
+`;
+
+const Heading = styled.h2`
+  text-align: center;
 `;
 
 export default FollowersPage;
