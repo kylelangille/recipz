@@ -15,7 +15,7 @@ const getFollowers = async (req, res) => {
     const db = client.db("recipz");
     const usersCollection = db.collection("users");
 
-    const user = await usersCollection.find({ id: userId });
+    const user = await usersCollection.findOne({ id: userId });
 
     if (!user) {
       return res
@@ -25,7 +25,7 @@ const getFollowers = async (req, res) => {
 
     const followersData = await usersCollection
       .find({ id: { $in: user.followers } })
-      .project({ _id: 0, id: 1, name: 1, location: 1, picture: 1 })
+      .project({ _id: 1, id: 1, name: 1, location: 1, picture: 1 })
       .toArray();
 
     res.status(200).json({

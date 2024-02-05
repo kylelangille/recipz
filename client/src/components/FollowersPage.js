@@ -1,10 +1,13 @@
 import { styled } from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 import LoadingCircle from "./UI/LoadingCircle";
+import UserCard from "./UI/UserCard";
 
 const FollowersPage = () => {
   const { userId } = useParams();
+  const { user: userFromContext } = useContext(UserContext);
   const [followers, setFollowers] = useState(null);
 
   useEffect(() => {
@@ -31,13 +34,17 @@ const FollowersPage = () => {
       ) : (
         <>
           {followers.length === 0 ? (
-            <p>No followers</p>
+            <p>You don't have any followers 😔</p>
           ) : (
             <>
               {followers.map((follower) => (
-                <div key={follower.id}>
-                  <p>{follower.name}</p>
-                </div>
+                <UserCard
+                  key={follower._id}
+                  userId={follower.id}
+                  userName={follower.name}
+                  userImg={follower.picture}
+                  userLocation={follower.location}
+                />
               ))}
             </>
           )}
