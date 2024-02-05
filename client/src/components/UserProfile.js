@@ -191,10 +191,12 @@ const UserProfile = () => {
                     <SubContainer>
                       <h2>{userData.name}</h2>
                       <p>
-                        <span>
-                          Following:{" "}
-                          {userData.following ? userData.following.length : 0}
-                        </span>{" "}
+                        <StyledLink to={`/following/${userId}`}>
+                          <span>
+                            Following:{" "}
+                            {userData.following ? userData.following.length : 0}
+                          </span>
+                        </StyledLink>{" "}
                         /{" "}
                         <StyledLink to={`/followers/${userId}`}>
                           <span>
