@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { FaPersonCirclePlus, FaPersonCircleXmark } from "react-icons/fa6";
@@ -196,10 +196,12 @@ const UserProfile = () => {
                           {userData.following ? userData.following.length : 0}
                         </span>{" "}
                         /{" "}
-                        <span>
-                          Followers:{" "}
-                          {userData.followers ? userData.followers.length : 0}
-                        </span>
+                        <StyledLink to={`/followers/${userId}`}>
+                          <span>
+                            Followers:{" "}
+                            {userData.followers ? userData.followers.length : 0}
+                          </span>
+                        </StyledLink>
                       </p>
                       <p>{userData.location}</p>
                     </SubContainer>
@@ -241,6 +243,15 @@ const SubContainer = styled.div``;
 
 const Icon = styled.div`
   margin-right: 1rem;
+`;
+
+const StyledLink = styled(Link)`
+  color: var(--main);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--secondary);
+  }
 `;
 
 export default UserProfile;
