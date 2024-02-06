@@ -20,7 +20,7 @@ const getFollowers = async (req, res) => {
     if (!user) {
       return res
         .status(404)
-        .json({ status: 404, message: "user not found", data: null });
+        .json({ status: 404, message: "User not found", data: null });
     }
 
     const followersData = await usersCollection
