@@ -53,7 +53,7 @@ const FollowersPage = () => {
               {userId !== userFromContext.id && (
                 <Heading>{user.name}'s Followers:</Heading>
               )}
-              <p>You don't have any followers 😔</p>
+              <p>No followers to be found 😔</p>
             </>
           ) : (
             <>
