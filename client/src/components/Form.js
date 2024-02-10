@@ -32,6 +32,7 @@ const Form = () => {
   });
   const [loading, setLoading] = useState(false);
   const [recipeSubmitted, setRecipeSubmitted] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleInputChange = (ev) => {
     handleInputChangeHelper(ev, setFormData);
@@ -96,6 +97,7 @@ const Form = () => {
       setRecipeSubmitted(true);
     } catch (err) {
       console.error("Error: ", err);
+      setError("Failed to add recipe. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -109,13 +111,11 @@ const Form = () => {
         <form onSubmit={handleSubmit}>
           <Title>Add a new recipe:</Title>
           {loading ? (
-            <>
-              <LoadingCircle />
-              <p>Submitting recipe...</p>
-            </>
+            <LoadingCircle />
           ) : recipeSubmitted ? (
             <>
               <p>Your recipe has been added!</p>
+              {error && <p>{error}</p>}
             </>
           ) : (
             <>
