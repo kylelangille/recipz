@@ -223,10 +223,18 @@ const UserProfile = () => {
 };
 
 const Wrapper = styled.div`
-  margin: 5rem auto 0 auto;
+  margin: 5rem auto 0 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: 1000px) {
+    margin: 5rem auto 0 150px;
+  }
+
+  @media (max-width: 500px) {
+    margin: 5rem auto 0 100px;
+  }
 `;
 
 const HeadContainer = styled.div`
@@ -239,9 +247,26 @@ const Avatar = styled.img`
   border-radius: 50%;
   max-width: 10rem;
   max-height: 10rem;
+
+  @media (max-width: 1000px) {
+    max-width: 5rem;
+    max-height: 5rem;
+  }
 `;
 
-const SubContainer = styled.div``;
+const SubContainer = styled.div`
+  h2 {
+    @media (max-width: 1000px) {
+      font-size: 20px;
+    }
+  }
+
+  p {
+    @media (max-width: 1000px) {
+      font-size: 17px;
+    }
+  }
+`;
 
 const Icon = styled.div`
   margin-right: 1rem;

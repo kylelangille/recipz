@@ -4,7 +4,12 @@ const Input = ({ label, id, ...props }) => {
   return (
     <Wrapper>
       <label htmlFor={id}>{label}</label>
-      <input id={id} name={id} {...props} />
+      <input
+        id={id}
+        name={id}
+        {...props}
+        style={{ width: props.customWidth }}
+      />
     </Wrapper>
   );
 };

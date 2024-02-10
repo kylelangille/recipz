@@ -82,6 +82,10 @@ const FollowersPage = () => {
 
 const Wrapper = styled.div`
   margin: 5rem auto 0 300px;
+
+  @media (max-width: 1000px) {
+    margin: 5rem auto 0 auto;
+  }
 `;
 
 const Heading = styled.h2`

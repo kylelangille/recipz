@@ -273,6 +273,10 @@ const RecipePage = () => {
 const Wrapper = styled.div`
   margin: 7rem auto 0 300px;
   max-width: 50rem;
+
+  @media (max-width: 1000px) {
+    margin: 7rem auto 0 150px;
+  }
 `;
 
 const HeadContainer = styled.div`
@@ -301,6 +305,11 @@ const MealImg = styled.img`
   margin-right: 1rem;
   border-radius: 12px;
   box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.5);
+
+  @media (max-width: 1000px) {
+    max-width: 7rem;
+    max-height: 7rem;
+  }
 `;
 
 const Heading = styled.h4`
@@ -340,6 +349,10 @@ const Icon = styled.div`
 
 const DetailsContainer = styled.div`
   margin-left: 11rem;
+
+  @media (max-width: 1000px) {
+    margin-left: 8rem;
+  }
 `;
 
 const IngredientContainer = styled.div`

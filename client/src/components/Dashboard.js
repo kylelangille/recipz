@@ -30,7 +30,7 @@ const Dashboard = () => {
             <Icon>
               <FaUser />
             </Icon>
-            My Profile
+            <span>My Profile</span>
           </StyledNavLink>
         </ListItem>
 
@@ -39,7 +39,7 @@ const Dashboard = () => {
             <Icon>
               <FaCirclePlus />
             </Icon>
-            Add New Recipe
+            <span>Add New Recipe</span>
           </StyledNavLink>
         </ListItem>
         <ListItem>
@@ -50,7 +50,7 @@ const Dashboard = () => {
             <Icon>
               <FaNewspaper />
             </Icon>
-            My Feed
+            <span>My Feed</span>
           </StyledNavLink>
         </ListItem>
         <ListItem>
@@ -61,7 +61,7 @@ const Dashboard = () => {
             <Icon>
               <FaBookOpenReader />
             </Icon>
-            My Recipes
+            <span>My Recipes</span>
           </StyledNavLink>
         </ListItem>
 
@@ -70,7 +70,7 @@ const Dashboard = () => {
             <Icon>
               <FaSearchengin />
             </Icon>
-            Search
+            <span>Search</span>
           </StyledNavLink>
         </ListItem>
 
@@ -79,7 +79,7 @@ const Dashboard = () => {
             <Icon>
               <FaCircleQuestion />
             </Icon>
-            Get Random Recipe
+            <span>Get Random Recipe</span>
           </StyledNavLink>
         </ListItem>
 
@@ -88,7 +88,7 @@ const Dashboard = () => {
             <Icon>
               <FaArrowRightToBracket />
             </Icon>
-            Log out
+            <span>Log out</span>
           </LogOutButton>
         </ListItem>
       </NavList>
@@ -106,6 +106,13 @@ const Navigation = styled.nav`
   overflow-y: auto;
   padding-top: 30px;
   z-index: 10;
+
+  @media (max-width: 1000px) {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Img = styled.img`
@@ -122,10 +129,20 @@ const NavList = styled.ul`
 const ListItem = styled.li`
   color: #ffffff;
   margin-bottom: 10px;
+
+  @media (max-width: 1000px) {
+    span {
+      display: none;
+    }
+  }
 `;
 
 const Icon = styled.div`
   margin-right: 1rem;
+
+  @media (max-width: 1000px) {
+    margin-bottom: 10px;
+  }
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -147,6 +164,11 @@ const StyledNavLink = styled(NavLink)`
     background: #999;
     border-radius: 6px;
     color: var(--background);
+
+    @media (max-width: 1000px) {
+      background: var(--background);
+      color: var(--main);
+    }
   }
 `;
 

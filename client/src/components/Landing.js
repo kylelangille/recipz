@@ -75,6 +75,11 @@ const Content = styled.div`
   @media (max-width: 700px) {
     flex-direction: column;
     margin: 0 auto;
+    align-items: center;
+  }
+
+  @media (max-width: 450px) {
+    padding: 10px;
   }
 `;
 
@@ -86,11 +91,19 @@ const SubWrapper = styled.div`
   h1 {
     color: var(--button);
     font-size: 3rem;
+
+    @media (max-width: 360px) {
+      font-size: 2rem;
+    }
   }
 
   p {
     font-size: 1.6rem;
     margin-bottom: 1rem;
+
+    @media (max-width: 360px) {
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -104,6 +117,11 @@ const HeroImg = styled.img`
   @media (max-width: 700px) {
     max-width: 20rem;
     max-height: 20rem;
+  }
+
+  @media (max-width: 360px) {
+    max-width: 15rem;
+    max-height: 15rem;
   }
 `;
 

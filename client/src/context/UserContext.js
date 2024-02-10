@@ -46,7 +46,6 @@ const UserProvider = ({ children }) => {
       const userData = await response.json();
 
       updateUserContext(userData.data);
-      console.log(userData.data);
     } catch (err) {
       console.error("Error: ", err);
     }

@@ -83,12 +83,28 @@ const Img = styled.img`
   margin: 10px 0 10px 10px;
   max-width: 10rem;
   max-height: 10rem;
+
+  @media (max-width: 1000px) {
+    max-width: 7rem;
+    max-height: 7rem;
+  }
 `;
 
 const MainContainer = styled.div`
   display: flex;
   gap: 10px;
   align-items: center;
+
+  h2 {
+    @media (max-width: 1000px) {
+      font-size: 17px;
+    }
+  }
+  p {
+    @media (max-width: 1000px) {
+      font-size: 12px;
+    }
+  }
 `;
 
 const DetailsControl = styled.div`
@@ -102,6 +118,16 @@ const DetailsContainer = styled.div`
   p {
     font-size: 1.2rem;
     text-decoration: underline;
+
+    @media (max-width: 1000px) {
+      font-size: 12px;
+    }
+  }
+
+  li {
+    @media (max-width: 1000px) {
+      font-size: 12px;
+    }
   }
 `;
 
