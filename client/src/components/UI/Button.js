@@ -32,6 +32,10 @@ const Wrapper = styled.button`
   border-radius: 12px;
   cursor: pointer;
 
+  @media (max-width: 1000px) {
+    font-size: 12px;
+  }
+
   &:hover {
     background: var(--button-hover);
   }

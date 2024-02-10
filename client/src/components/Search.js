@@ -64,6 +64,10 @@ const Wrapper = styled.div`
   margin: 7rem auto 0 300px;
   max-width: 30rem;
   flex-direction: column;
+
+  @media (max-width: 870px) {
+    margin: 7rem auto 0 150px;
+  }
 `;
 
 const Controls = styled.div`
@@ -75,6 +79,10 @@ const Input = styled.input`
   margin-right: 0.5rem;
   width: 30rem;
   font-size: 1rem;
+
+  @media (max-width: 700px) {
+    max-width: 15rem;
+  }
 `;
 
 const ResultsList = styled.ul`
@@ -88,6 +96,10 @@ const ResultsList = styled.ul`
     max-width: 23.8rem;
     cursor: pointer;
     border-radius: 3px;
+
+    @media (max-width: 700px) {
+      max-width: 15rem;
+    }
 
     &:hover {
       background: var(--secondary);

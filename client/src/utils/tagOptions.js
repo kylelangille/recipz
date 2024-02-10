@@ -12,15 +12,6 @@ const TAG_OPTIONS = [
   "Pasta",
   "Vegan",
   "Vegetarian",
-  "Gluten-Free",
-  "Peanut-Free",
-  "Shellfish-Free",
-  "Side",
-  "Starter",
-  "One-Pot",
-  "Air-Fryer",
-  "Keto",
-  "High-Protein",
   "Date-Night",
 ];
 

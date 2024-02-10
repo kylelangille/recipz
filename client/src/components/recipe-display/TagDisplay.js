@@ -29,24 +29,6 @@ const TagDisplay = ({ tags }) => {
         return "#9ebd6e";
       case "vegetarian":
         return "#3e5622";
-      case "gluten-free":
-        return "#3943b7";
-      case "peanut-free":
-        return "#E6AF2E";
-      case "shellfish-free":
-        return "#0B7189";
-      case "side":
-        return "#52FFB8";
-      case "starter":
-        return "#FFBFA0";
-      case "one-pot":
-        return "#6b7780";
-      case "air-fryer":
-        return "#AAADC4";
-      case "keto":
-        return "#DCDBA8";
-      case "high-protein":
-        return "#75DBCD";
       case "date-night":
         return "#E574BC";
       default:
@@ -78,6 +60,11 @@ const Tag = styled.span`
   border-radius: 9px;
   font-weight: bold;
   text-shadow: 1px 1px 1px var(--stroke);
+
+  @media (max-width: 1000px) {
+    font-size: 12px;
+    padding: 2px 5px;
+  }
 `;
 
 export default TagDisplay;

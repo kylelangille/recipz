@@ -26,6 +26,19 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 10px;
 
+  @media (max-width: 1000px) {
+    max-width: 30rem;
+    margin: 1rem auto;
+
+    h2 {
+      font-size: 17px;
+    }
+
+    p {
+      font-size: 12px;
+    }
+  }
+
   &:hover {
     color: var(--secondary);
   }
@@ -35,6 +48,11 @@ const UserImg = styled.img`
   max-height: 10rem;
   max-width: 10rem;
   border-radius: 9px;
+
+  @media (max-width: 1000px) {
+    max-height: 5rem;
+    max-width: 5rem;
+  }
 `;
 
 const StyledLink = styled(Link)`

@@ -171,6 +171,7 @@ const EditRecipeForm = ({ recipeData, recipeId, onEditComplete, onCancel }) => {
                 type="text"
                 value={step}
                 onChange={(ev) => handleStepChange(index, ev.target.value)}
+                customWidth={"20rem"}
               />
               <RemoveButton
                 type="button"

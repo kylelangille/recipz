@@ -13,6 +13,10 @@ const StyledButton = styled.button`
   transition: 0.3s all ease-in-out;
   cursor: pointer;
 
+  @media (max-width: 1000px) {
+    font-size: 12px;
+  }
+
   &:hover {
     background: #ab3337;
   }

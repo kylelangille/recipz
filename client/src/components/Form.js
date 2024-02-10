@@ -184,6 +184,7 @@ const Form = () => {
                     type="text"
                     value={step}
                     onChange={(ev) => handleStepChange(index, ev.target.value)}
+                    customWidth={"20rem"}
                   />
                   <RemoveButton
                     type="button"
@@ -231,7 +232,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 5rem auto 4rem auto;
+  margin: 5rem auto 4rem 300px;
 `;
 
 const Title = styled.h2`
