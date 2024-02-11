@@ -99,7 +99,7 @@ const RandomRecipeCard = ({ meal }) => {
           <MealImg src={meal.strMealThumb} alt={meal.strMeal} />
           <br />
           <Heading>Ingredients:</Heading>
-          <ol>{renderIngredients(meal)}</ol>
+          <Ingredients>{renderIngredients(meal)}</Ingredients>
           <br />
           <Heading>Instructions:</Heading>
           <Instructions>{meal.strInstructions}</Instructions>
@@ -123,12 +123,20 @@ const Wrapper = styled.div`
   margin: 1rem 0;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.3);
   padding: 20px;
+
+  @media (max-width: 1000px) {
+    margin: 1rem auto 0 120px;
+  }
 `;
 
 const Title = styled.h2`
   text-align: center;
   font-size: 1.6rem;
   padding: 0 10px 10px 10px;
+
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const MealImg = styled.img`
@@ -137,15 +145,34 @@ const MealImg = styled.img`
   margin: 0 auto 1rem auto;
   border-radius: 12px;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.3);
+
+  @media (max-width: 600px) {
+    max-width: 10rem;
+    max-height: 10rem;
+  }
 `;
 
 const Heading = styled.p`
   font-size: 1.2rem;
   text-decoration: underline;
+
+  @media (max-width: 600px) {
+    font-size: 1rem;
+  }
+`;
+
+const Ingredients = styled.ol`
+  @media (max-width: 600px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const Instructions = styled.p`
   white-space: pre-line;
+
+  @media (max-width: 600px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const SaveContainer = styled.div`
