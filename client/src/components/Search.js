@@ -73,6 +73,10 @@ const Wrapper = styled.div`
 const Controls = styled.div`
   display: flex;
   margin-bottom: 12px;
+
+  @media (max-width: 420px) {
+    flex-direction: column;
+  }
 `;
 
 const Input = styled.input`
@@ -87,6 +91,10 @@ const Input = styled.input`
 
 const ResultsList = styled.ul`
   list-style-type: none;
+
+  @media (max-width: 420px) {
+    margin-top: 1rem;
+  }
 
   li {
     background: var(--main);

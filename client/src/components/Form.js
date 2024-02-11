@@ -233,11 +233,19 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   margin: 5rem auto 4rem 300px;
+
+  @media (max-width: 1000px) {
+    margin: 5rem auto 4rem 100px;
+  }
 `;
 
 const Title = styled.h2`
   margin-bottom: 1rem;
   font-size: 2rem;
+
+  @media (max-width: 700px) {
+    font-size: 1.6rem;
+  }
 `;
 
 const InputWrapper = styled.div`
@@ -253,6 +261,8 @@ const InputWrapper = styled.div`
 
 const Field = styled.fieldset`
   margin-bottom: 2rem;
+
+  max-width: 20rem;
 `;
 
 const Legend = styled.legend`

@@ -108,7 +108,7 @@ const Navigation = styled.nav`
   z-index: 10;
 
   @media (max-width: 1000px) {
-    width: 150px;
+    width: 120px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -119,6 +119,11 @@ const Img = styled.img`
   max-width: 5rem;
   max-height: 5rem;
   margin: 0 auto;
+
+  @media (max-width: 1000px) {
+    max-width: 3rem;
+    max-heigth: 3rem;
+  }
 `;
 
 const NavList = styled.ul`

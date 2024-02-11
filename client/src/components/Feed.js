@@ -44,6 +44,10 @@ const Feed = () => {
 
 const Wrapper = styled.div`
   margin: 5rem auto 0 300px;
+
+  @media (max-width: 1000px) {
+    margin: 5rem auto 0 120px;
+  }
 `;
 
 export default Feed;

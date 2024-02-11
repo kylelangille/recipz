@@ -241,6 +241,10 @@ const HeadContainer = styled.div`
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
+
+  @media (max-width: 490px) {
+    flex-direction: column;
+  }
 `;
 
 const Avatar = styled.img`
@@ -251,6 +255,10 @@ const Avatar = styled.img`
   @media (max-width: 1000px) {
     max-width: 5rem;
     max-height: 5rem;
+  }
+
+  @media (max-width: 490px) {
+    align-self: center;
   }
 `;
 
