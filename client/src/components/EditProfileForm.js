@@ -1,5 +1,7 @@
 import { styled } from "styled-components";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { UserContext } from "../context/UserContext";
 import Input from "./UI/Input";
 import Button from "./UI/Button";
 import DeleteButton from "./UI/DeleteButton";
@@ -12,6 +14,10 @@ const EditProfileForm = ({ user, onSave, onCancel }) => {
     location: user.location,
     picture: user.picture,
   });
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(false);
+  const { user: userFromContent } = useContext(UserContext);
+  const { logout } = useAuth0();
 
   const handleInputChange = (ev) => {
     const { name, value } = ev.target;
@@ -34,6 +40,37 @@ const EditProfileForm = ({ user, onSave, onCancel }) => {
 
   const handleCancelUpdate = () => {
     onCancel();
+  };
+
+  const handleShowConfirmDelete = () => {
+    setShowConfirmDelete(true);
+  };
+
+  const handleDenyDelete = () => {
+    setShowConfirmDelete(false);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      setLoadingDelete(true);
+
+      await fetch("/api/delete-profile", {
+        method: "DELETE",
+        body: JSON.stringify({
+          userId: userFromContent.id,
+        }),
+
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (err) {
+      console.error("Error: ", err);
+    } finally {
+      setLoadingDelete(false);
+      logout();
+    }
   };
 
   return (
@@ -69,12 +106,32 @@ const EditProfileForm = ({ user, onSave, onCancel }) => {
         </ImgLabel>
         <br />
         <Control>
-          <Button type="submit" onClick={handleSave}>
-            Save changes
-          </Button>
-          <DeleteButton type="button" onClick={handleCancelUpdate}>
-            Cancel
-          </DeleteButton>
+          {!showConfirmDelete && (
+            <>
+              <Button type="submit" onClick={handleSave}>
+                Save changes
+              </Button>
+              <DeleteButton type="button" onClick={handleCancelUpdate}>
+                Cancel
+              </DeleteButton>
+            </>
+          )}
+          {!showConfirmDelete && (
+            <DeleteButton type="button" onClick={handleShowConfirmDelete}>
+              Delete profile
+            </DeleteButton>
+          )}
+          {showConfirmDelete && (
+            <>
+              <p>Are you sure?</p>
+              <Button disabled={loadingDelete} onClick={handleConfirmDelete}>
+                {loadingDelete ? "Deleting profile..." : "Yes"}
+              </Button>
+              <Button disbaled={loadingDelete} onClick={handleDenyDelete}>
+                No
+              </Button>
+            </>
+          )}
         </Control>
       </form>
     </Wrapper>

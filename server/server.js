@@ -22,6 +22,7 @@ const { getUserFeed } = require("./handlers/getUserFeed");
 const { getSearch } = require("./handlers/getSearch");
 const { getFollowers } = require("./handlers/getFollowers");
 const { getFollowing } = require("./handlers/getFollowing");
+const { deleteProfile } = require("./handlers/deleteProfile");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -61,6 +62,7 @@ express()
   .get("/api/get-followers/:userId", getFollowers)
   .get("/api/get-following/:userId", getFollowing)
   .delete("/api/delete-recipe", deleteRecipe)
+  .delete("/api/delete-profile", deleteProfile)
   .put("/api/edit-profile/:userId", editProfile)
   .put("/api/edit-recipe/:recipeId", editRecipe)
   //
