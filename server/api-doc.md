@@ -18,5 +18,6 @@
 | `POST`   | `/api/unsave-recipe/:recipeId` | Unsaves a recipe from a user's profile based on provided recipeId            |
 | `POST`   | `/api/save-random-recipe`      | Saves a random recipe to recipes collection                                  |
 | `DELETE` | `/api/delete-recipe`           | Removes a recipe from a user's collection                                    |
+| `DELETE` | `/api/delete-profile`          | Deletes a user's profile and all recipes submitted by that user data         |
 | `PUT`    | `/api/edit-profile/:userId`    | Edits a user's profile based on provided userId                              |
 | `PUT`    | `/api/edit-recipe/:recipeId`   | Edits a recipe based on provided recipeId                                    |
