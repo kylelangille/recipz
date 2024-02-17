@@ -1,161 +1,277 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "styled-components";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../context/UserContext";
 import Button from "./UI/Button";
 import AddButton from "./UI/AddButton";
 import RemoveButton from "./UI/RemoveButton";
 import Input from "./UI/Input";
+import TagInput from "./UI/TagInput";
+import LoadingCircle from "./UI/LoadingCircle";
+import TAG_OPTIONS from "../utils/tagOptions";
+
+import { handleInputChangeHelper } from "../form-helpers/handleInputChangeHelper";
+import { handleImgChangeHelper } from "../form-helpers/handleImgChangeHelper";
+import { handleIngredientChangeHelper } from "../form-helpers/handleIngredientChangeHelper";
+import { handleAddIngredientHelper } from "../form-helpers/handleAddIngredientHelper";
+import { handleRemoveIngredientHelper } from "../form-helpers/handleRemoveIngredientHelper";
+import { handleStepChangeHelper } from "../form-helpers/handleStepChangeHelper";
+import { handleAddStepHelper } from "../form-helpers/handleAddStepHelper";
+import { handleRemoveStepHelper } from "../form-helpers/handleRemoveStepHelper";
+import { handleTagChangeHelper } from "../form-helpers/handleTagChangeHelper";
 
 const Form = () => {
+  const { user: userFromContext } = useContext(UserContext);
+  const { isAuthenticated } = useAuth0();
   const [formData, setFormData] = useState({
     recipeName: "",
-    mealImg: null,
+    mealImg: "",
     ingredients: [],
-    instructions: "",
+    steps: [],
+    tags: [],
   });
+  const [loading, setLoading] = useState(false);
+  const [recipeSubmitted, setRecipeSubmitted] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleInputChange = (ev) => {
-    const { id, value } = ev.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: value,
-    }));
+    handleInputChangeHelper(ev, setFormData);
   };
 
   const handleImgChange = (ev) => {
-    const { id, imgFile } = ev.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: imgFile[0],
-    }));
+    handleImgChangeHelper(ev, setFormData);
   };
 
   const handleIngredientChange = (index, field, value) => {
-    setFormData((prevData) => {
-      const newIngredients = [...prevData.ingredients];
-      newIngredients[index][field] = value;
-      return {
-        ...prevData,
-        ingredients: newIngredients,
-      };
-    });
+    handleIngredientChangeHelper(index, field, value, setFormData);
   };
 
   const handleAddIngredient = () => {
-    setFormData((prevData) => ({
-      ...prevData,
-      ingredients: [...prevData.ingredients, { ingredient: "", measure: "" }],
-    }));
+    handleAddIngredientHelper(setFormData);
   };
 
   const handleRemoveIngredient = (index) => {
-    setFormData((prevData) => {
-      const newIngredients = [...prevData.ingredients];
-      newIngredients.splice(index, 1);
-      return {
-        ...prevData,
-        ingredients: newIngredients,
-      };
-    });
+    handleRemoveIngredientHelper(index, setFormData);
   };
 
-  const handleSubmit = (ev) => {
-    ev.preventDefault();
+  const handleStepChange = (index, value) => {
+    handleStepChangeHelper(index, value, setFormData);
   };
+
+  const handleAddStep = () => {
+    handleAddStepHelper(setFormData);
+  };
+
+  const handleRemoveStep = (index) => {
+    handleRemoveStepHelper(index, setFormData);
+  };
+
+  const handleTagChange = (tag) => {
+    handleTagChangeHelper(tag, setFormData);
+  };
+
+  const handleSubmit = async (ev) => {
+    ev.preventDefault();
+
+    const userId = userFromContext.id;
+
+    const date = new Date().toLocaleString();
+    const createdBy = userFromContext.name;
+
+    const newRecipe = { formData, userId, date: date, createdBy: createdBy };
+
+    try {
+      setLoading(true);
+      const response = await fetch("/api/add-recipe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newRecipe),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add recipe");
+      }
+
+      setRecipeSubmitted(true);
+    } catch (err) {
+      console.error("Error: ", err);
+      setError("Failed to add recipe. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const bigText = "1.6rem";
 
   return (
     <Wrapper>
-      <form onSubmit={handleSubmit}>
-        <h2>Add a new recipe:</h2>
-        <Input
-          label="Recipe name"
-          type="text"
-          id="recipeName"
-          value={formData.recipeName}
-          onChange={handleInputChange}
-        />
+      {isAuthenticated ? (
+        <form onSubmit={handleSubmit}>
+          <Title>Add a new recipe:</Title>
+          {loading ? (
+            <LoadingCircle />
+          ) : recipeSubmitted ? (
+            <>
+              <p>Your recipe has been added!</p>
+              {error && <p>{error}</p>}
+            </>
+          ) : (
+            <>
+              <Input
+                label="Recipe name"
+                type="text"
+                id="recipeName"
+                value={formData.recipeName}
+                onChange={handleInputChange}
+              />
+              <br />
+              <label htmlFor="mealImg">
+                Select an image:
+                <input
+                  id="mealImg"
+                  type="file"
+                  name="mealImg"
+                  accept="image/*"
+                  onChange={handleImgChange}
+                />
+              </label>
+              <br />
+              <br />
+              {formData.ingredients.map((ingredient, index) => (
+                <InputWrapper key={index}>
+                  <Input
+                    label={`Ingredient ${index + 1}`}
+                    type="text"
+                    value={ingredient.ingredient}
+                    onChange={(ev) =>
+                      handleIngredientChange(
+                        index,
+                        "ingredient",
+                        ev.target.value
+                      )
+                    }
+                  />
 
-        <label htmlFor="mealImg">
-          Select an image:
-          <input
-            id="mealImg"
-            type="file"
-            name="mealImg"
-            accep="image/*"
-            onChange={handleImgChange}
-          />
-        </label>
+                  <Input
+                    label="How much?"
+                    type="text"
+                    value={ingredient.measure}
+                    onChange={(ev) =>
+                      handleIngredientChange(index, "measure", ev.target.value)
+                    }
+                  />
+                  <RemoveButton
+                    type="button"
+                    onClick={() => handleRemoveIngredient(index)}
+                  >
+                    &times;
+                  </RemoveButton>
+                </InputWrapper>
+              ))}
 
-        {formData.ingredients.map((ingredient, index) => (
-          <IngredientWrapper key={index}>
-            <Input
-              label={`Ingredient ${index + 1}`}
-              type="text"
-              value={ingredient.ingredient}
-              onChange={(ev) =>
-                handleIngredientChange(index, "ingredient", ev.target.value)
-              }
-            />
+              <AddButton type="button" onClick={handleAddIngredient}>
+                Add Ingredient
+              </AddButton>
 
-            <Input
-              label="How much?"
-              type="text"
-              value={ingredient.measure}
-              onChange={(ev) =>
-                handleIngredientChange(index, "measure", ev.target.value)
-              }
-            />
-            <RemoveButton
-              type="button"
-              onClick={() => handleRemoveIngredient(index)}
-            >
-              &times;
-            </RemoveButton>
-          </IngredientWrapper>
-        ))}
+              <br />
 
-        <AddButton type="button" onClick={handleAddIngredient}>
-          Add Ingredient
-        </AddButton>
+              {formData.steps.map((step, index) => (
+                <InputWrapper key={index}>
+                  <Input
+                    label={`Step ${index + 1}`}
+                    type="text"
+                    value={step}
+                    onChange={(ev) => handleStepChange(index, ev.target.value)}
+                    customWidth={"20rem"}
+                  />
+                  <RemoveButton
+                    type="button"
+                    onClick={() => handleRemoveStep(index)}
+                  >
+                    &times;
+                  </RemoveButton>
+                </InputWrapper>
+              ))}
 
-        <InstructionsWrapper>
-          <label htmlFor="instructions">Add instructions</label>
-          <textarea
-            id="instructions"
-            name="instructions"
-            placeholder="How do you make this?"
-          ></textarea>
-        </InstructionsWrapper>
+              <AddButton type="button" onClick={handleAddStep}>
+                Add Step
+              </AddButton>
 
-        <Button type="submit">Add Recipe</Button>
-      </form>
+              <br />
+
+              <Field>
+                <Legend>Add tags:</Legend>
+                {TAG_OPTIONS.map((tag) => (
+                  <TagInput
+                    key={tag}
+                    id={tag}
+                    label={tag}
+                    checked={formData.tags.includes(tag)}
+                    onChange={() => handleTagChange(tag)}
+                  />
+                ))}
+              </Field>
+              <SubmitWrapper>
+                <Button type="submit" customText={bigText}>
+                  Add Recipe
+                </Button>
+              </SubmitWrapper>
+            </>
+          )}
+        </form>
+      ) : (
+        <p>You must be logged in to see this content.</p>
+      )}
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  margin-top: 7rem;
-`;
-
-const IngredientWrapper = styled.div`
-  display: flex;
-  gap: 10px;
-`;
-
-const InstructionsWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin: 5rem auto 4rem 300px;
+
+  @media (max-width: 1000px) {
+    margin: 5rem auto 4rem 100px;
+  }
+`;
+
+const Title = styled.h2`
+  margin-bottom: 1rem;
+  font-size: 2rem;
+
+  @media (max-width: 700px) {
+    font-size: 1.6rem;
+  }
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
   label {
     font-weight: bold;
     margin-bottom: 0.5rem;
   }
+`;
 
-  textarea {
-    width: 23rem;
-    height: 10rem;
-    border: 1px solid var(--stroke);
-    resize: none;
-  }
+const Field = styled.fieldset`
+  margin-bottom: 2rem;
+
+  max-width: 20rem;
+`;
+
+const Legend = styled.legend`
+  font-size: 1.1rem;
+`;
+
+const SubmitWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 export default Form;

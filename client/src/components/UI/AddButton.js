@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 const AddButton = ({ onClick, children, ...props }) => {
   return (
     <Wrapper onClick={onClick}>
-      <Button>+</Button>
+      <Button type="button">+</Button>
       <span>{children}</span>
     </Wrapper>
   );
@@ -14,9 +14,10 @@ const Wrapper = styled.div`
   width: 12rem;
   border-radius: 12px;
   transition: 0.3s all ease-in-out;
+  margin: 1rem 0;
 
   &:hover {
-    background: #999;
+    background: var(--secondary);
     color: var(--heading);
   }
 `;
@@ -27,9 +28,8 @@ const Button = styled.button`
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  border: 1px solid #555;
+  border: 1px solid var(--paragraph);
   cursor: pointer;
-
   margin-right: 1rem;
 `;
 

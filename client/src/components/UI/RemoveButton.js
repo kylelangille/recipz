@@ -7,7 +7,6 @@ const RemoveButton = ({ onClick, children, ...props }) => {
 const Button = styled.button`
   background: var(--remove);
   color: var(--stroke);
-  border: none;
   border-radius: 50%;
   width: 20px;
   height: 20px;
@@ -17,7 +16,8 @@ const Button = styled.button`
   justify-content: center;
   transition: 0.3s all ease-in-out;
   border: 1px solid var(--stroke);
-  margin-top: 3rem;
+  margin-top: 2rem;
+  padding: 10px;
 
   &:hover {
     background: #ab3337;
